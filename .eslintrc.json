@@ -1,6 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react", "@typescript-eslint", "prettier", "cypress"],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
   "extends": [
     "airbnb",
     "airbnb-typescript",
@@ -12,11 +12,10 @@
     "plugin:prettier/recommended"
   ],
   "env": {
-    "cypress/globals": true,
     "browser": true,
-    "jasmine": true,
-    "jest": true,
-    "node": true
+    "node": true,
+    "es6": true,
+    "jest": true
   },
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -30,6 +29,15 @@
 
     // React
     "react/prop-types": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "warn"
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+
+    // Typescript
+    "@typescript-eslint/explicit-module-boundary-types": "warn",
+
+    // Import
+    "import/extensions": "off",
+    "import/no-absolute-path": "off",
+    "import/prefer-default-export": "off"
   }
 }

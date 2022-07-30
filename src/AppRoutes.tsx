@@ -1,16 +1,17 @@
 import { Routes, Route } from "react-router-dom"
 
-const ApiGatewayScreen = () => {
-  return <div>temp</div>
-}
+import { ApiGateway } from "./views/ApiGateway"
+import { Home } from "./views/Home"
+import { NotFoundError } from "/@/components/NotFoundError"
 
-function AppRoutes() {
+function AppRoutes(): JSX.Element {
   return (
     <Routes>
-      <Route index element={<ApiGatewayScreen />} />
-      <Route path="/apigateway" element={<ApiGatewayScreen />} />
+      <Route index element={<Home />} />
+      <Route path="/" element={<ApiGateway />} />
+      <Route path="/apigateway" element={<ApiGateway />} />
 
-      <Route path="*" element={<ApiGatewayScreen />} />
+      <Route path="*" element={<NotFoundError />} />
     </Routes>
   )
 }
