@@ -4,7 +4,7 @@ interface AppProvidersProps {
   children: React.ReactNode
 }
 
-const AppProviders = ({ children }: AppProvidersProps) => {
+function AppProviders({ children }: AppProvidersProps): JSX.Element {
   return <Router>{children}</Router>
 }
 
