@@ -1,0 +1,7 @@
+build/
+cypress/examples
+*.css
+*.svg
+
+src-tauri/
+dist/

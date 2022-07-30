@@ -1,0 +1,35 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["react", "@typescript-eslint", "prettier", "cypress"],
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "env": {
+    "cypress/globals": true,
+    "browser": true,
+    "jasmine": true,
+    "jest": true,
+    "node": true
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    // Include .prettierrc rules
+    "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
+
+    // ESlint
+    "no-console": "warn",
+
+    // React
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "warn"
+  }
+}
