@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  localstack:
+    container_name: localstack
+    image: localstack/localstack
+    ports:
+      - "443:443"
+      - "4566:4566"
+    env_file:
+      - .env
+    environment:
+      - SERVICES=${SERVICES:-lambda,s3,apigateway,iam,sts}
+      - EXTRA_CORS_ALLOWED_ORIGIN=http://localhost:3000
+      - DISABLE_CORS_CHECKS=true
+      - DATA_DIR=/tmp/localstack/data
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR:-}
+      - HOST_TMP_FOLDER=${TMPDIR}:/tmp/localstack
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - LAMBDA_REMOTE_DOCKER=0
+      - LAMBDA_DOCKER_FLAGS=-p 127.0.0.1:19891:19891
+      - DEBUG=1
+      - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY:-}
+    volumes:
+      - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - localstack
+
+networks:
+  localstack:
+    external: false
