@@ -1,20 +1,30 @@
 import { styled } from "@stitches/react"
 
 import AppRoutes from "/@/AppRoutes"
-import { BLACK500, TERTIARY } from "./constants/colors"
+import { Titlebar } from "./components/Titlebar"
+import { TERTIARY, BLACK400 } from "./constants/colors"
+import { MAC_OS_TITLEBAR_HEIGHT } from "./constants/macos"
 
 const AppStyles = styled("div", {
+  backgroundColor: BLACK400,
+  color: TERTIARY,
   width: "100vw",
   height: "100vh",
-  backgroundColor: BLACK500,
+})
+
+const Main = styled("div", {
+  marginTop: MAC_OS_TITLEBAR_HEIGHT,
   display: "flex",
-  color: TERTIARY,
+  height: "100%",
 })
 
 function App(): JSX.Element {
   return (
     <AppStyles>
-      <AppRoutes />
+      <Titlebar />
+      <Main>
+        <AppRoutes />
+      </Main>
     </AppStyles>
   )
 }

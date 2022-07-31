@@ -13,7 +13,7 @@ interface DashboardProps {
 
 function Dashboard({ children }: DashboardProps): JSX.Element {
   return (
-    <Layout>
+    <Layout id="default-layout">
       <Sidebar />
       <div>{children}</div>
     </Layout>
