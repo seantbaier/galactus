@@ -130,4 +130,6 @@ table {
 
 body {
   box-sizing: border-box;
+  font-family: "sans-serif";
+  letter-spacing: 0.025rem;
 }

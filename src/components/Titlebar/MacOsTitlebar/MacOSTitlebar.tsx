@@ -6,8 +6,11 @@ import TitlebarButton from "./MacOSTitlebarButton"
 import { MacOSCloseIcon, MacOSMaximizeIcon, MacOSMinimizeIcon } from "./MacOSIcons"
 
 // Constants
-import { BLACK500 } from "/@/constants/colors"
+import { BLACK500, WHITE100 } from "/@/constants/colors"
 import { MAC_OS_TITLEBAR_HEIGHT } from "/@/constants/macos"
+import { PRIMARY_FONT_FAMILY, PROJECT_NAME } from "/@/constants/project"
+
+const TITLEBAR_CONTAINER_LENGTH = "55px"
 
 const MacOSTitlebarContainer = styled("div", {
   height: MAC_OS_TITLEBAR_HEIGHT,
@@ -19,7 +22,8 @@ const MacOSTitlebarContainer = styled("div", {
   paddingLeft: "10px",
   width: "100%",
   display: "flex",
-  justifyContent: "start",
+  justifyContent: "space-between",
+  alignItems: "center",
   userSelect: "none",
   borderBottom: `1px solid rgba(0, 0, 0,0.5)`,
 })
@@ -27,7 +31,7 @@ const MacOSTitlebarContainer = styled("div", {
 const MacOSTitleButtonsContainer = styled("div", {
   display: "flex",
   justifyContent: "space-between",
-  width: "55px",
+  width: TITLEBAR_CONTAINER_LENGTH,
   alignItems: "center",
 
   "& svg": {
@@ -40,6 +44,20 @@ const MacOSTitleButtonsContainer = styled("div", {
       display: "initial",
     },
   },
+})
+
+const Title = styled("div", {
+  alignSelf: "center",
+  justifySelf: "center",
+  fontFamily: PRIMARY_FONT_FAMILY,
+  fontSize: "0.8rem",
+  color: WHITE100,
+  width: TITLEBAR_CONTAINER_LENGTH,
+  textTransform: "capitalize",
+})
+
+const Spacer = styled("div", {
+  width: TITLEBAR_CONTAINER_LENGTH,
 })
 
 function MacOSTitlebar(): JSX.Element {
@@ -62,6 +80,8 @@ function MacOSTitlebar(): JSX.Element {
           <MacOSMaximizeIcon />
         </TitlebarButton>
       </MacOSTitleButtonsContainer>
+      <Title>{PROJECT_NAME}</Title>
+      <Spacer />
     </MacOSTitlebarContainer>
   )
 }

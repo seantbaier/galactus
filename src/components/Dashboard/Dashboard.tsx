@@ -7,6 +7,12 @@ const Layout = styled("div", {
   width: "100%",
 })
 
+const Main = styled("div", {
+  padding: "25px",
+  display: "flex",
+  width: "100%",
+})
+
 interface DashboardProps {
   children: React.ReactNode
 }
@@ -15,7 +21,7 @@ function Dashboard({ children }: DashboardProps): JSX.Element {
   return (
     <Layout id="default-layout">
       <Sidebar />
-      <div>{children}</div>
+      <Main>{children}</Main>
     </Layout>
   )
 }
