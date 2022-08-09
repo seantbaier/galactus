@@ -1,8 +1,12 @@
 // Components
 import MacOSTitlebar from "./MacOsTitlebar/MacOSTitlebar"
 
-function Titlebar(): JSX.Element {
-  return <MacOSTitlebar />
+export type TitlebarProps = {
+  className?: string
+}
+
+function Titlebar({ className = "" }: TitlebarProps): JSX.Element {
+  return <MacOSTitlebar className={className} />
 }
 
 export default Titlebar

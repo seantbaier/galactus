@@ -1,17 +1,4 @@
-import { styled } from "@stitches/react"
-
 import { Sidebar } from "/@/components/Sidebar"
-
-const Layout = styled("div", {
-  display: "flex",
-  width: "100%",
-})
-
-const Main = styled("div", {
-  padding: "25px",
-  display: "flex",
-  width: "100%",
-})
 
 interface DashboardProps {
   children: React.ReactNode
@@ -19,10 +6,10 @@ interface DashboardProps {
 
 function Dashboard({ children }: DashboardProps): JSX.Element {
   return (
-    <Layout id="default-layout">
+    <div id="dashboard" className="flex w-100">
       <Sidebar />
-      <Main>{children}</Main>
-    </Layout>
+      <div className="flex w-screen p-[25px]">{children}</div>
+    </div>
   )
 }
 

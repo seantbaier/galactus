@@ -26,6 +26,7 @@
 
     // ESlint
     "no-console": "warn",
+    "global-require": "off",
 
     // React
     "react/prop-types": "off",
@@ -38,6 +39,16 @@
     // Import
     "import/extensions": "off",
     "import/no-absolute-path": "off",
-    "import/prefer-default-export": "off"
-  }
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "rules": {
+        "@typescript-eslint/explicit-module-boundary-types": ["off"],
+        "@typescript-eslint/no-var-requires": ["off"]
+      }
+    }
+  ]
 }

@@ -1,24 +1,19 @@
-import { styled } from "@stitches/react"
-
 // Componentes
 import { Navigation } from "./Navbar"
 
-// Constants
-import { PRIMARY_BLACK } from "/@/constants/colors"
-
-const SidebarStyles = styled("div", {
-  backgroundColor: PRIMARY_BLACK,
-  minWidth: "50px",
-  display: "flex",
-  justifyContent: "center",
-  padding: "15px 0 0 0",
-})
+import { classNames } from "/@/utils/tailwind"
+import { SIDEBAR_WIDTH } from "/@/constants/layout"
 
 function Sidebar(): JSX.Element {
   return (
-    <SidebarStyles>
+    <div
+      className={classNames(
+        "flex justify-center pt-[15px] bg-black-dark mt-[30px]",
+        SIDEBAR_WIDTH,
+      )}
+    >
       <Navigation />
-    </SidebarStyles>
+    </div>
   )
 }
 

@@ -1,77 +1,58 @@
-import { styled } from "@stitches/react"
 import { CheckIcon } from "@radix-ui/react-icons"
 
 import type { StepStatus } from "./Steps"
 
-import { WHITE100, PRIMARY_DARK, PRIMARY_LIGHT, PRIMARY_BLACK } from "/@/constants/colors"
-
-const Icon = styled("div", {
-  borderRadius: "100%",
-  height: "25px",
-  width: "25px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginBottom: "5px",
-  fontSize: "0.8rem",
-})
-
-const DoneIcon = styled(Icon, {
-  backgroundColor: PRIMARY_DARK,
-  border: `1px solid ${PRIMARY_LIGHT}`,
-})
-
-const DoneCheckmark = styled(CheckIcon, {
-  color: PRIMARY_LIGHT,
-})
-
-const WaitingIcon = styled(Icon, {
-  backgroundColor: WHITE100,
-  color: PRIMARY_BLACK,
-})
-
-const InProgressIcon = styled(Icon, {
-  backgroundColor: PRIMARY_LIGHT,
-  color: WHITE100,
-})
-
-const Tail = styled("div", {
-  width: "1px",
-  height: "20px",
-  marginBottom: "5px",
-})
-
-const DoneTail = styled(Tail, {
-  backgroundColor: PRIMARY_LIGHT,
-})
-
-const WaitingTail = styled(Tail, {
-  backgroundColor: WHITE100,
-})
-
-const StepIconContainer = styled("div", {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  marginRight: "15px",
-})
+import { classNames } from "/@/utils/tailwind"
 
 type StatusIconProps = {
   index: number
   status: StepStatus
 }
 
+const backgroundColor = {
+  done: "bg-primary-dark border border-primary-light",
+  running: "bg-primary-light",
+  waiting: "bg-white-main",
+}
+
 function StatusIcon({ index, status }: StatusIconProps): JSX.Element {
   const statusIcon = {
-    done: (
-      <DoneIcon>
-        <DoneCheckmark />
-      </DoneIcon>
-    ),
-    running: <InProgressIcon>{index}</InProgressIcon>,
-    waiting: <WaitingIcon>{index}</WaitingIcon>,
+    done: <CheckIcon className="text-primary-light" />,
+    running: <span className="text-primary-white">{index}</span>,
+    waiting: <div className="text-tertiary-main">{index}</div>,
   }
-  return statusIcon[status]
+
+  return (
+    <div
+      className={classNames(
+        "flex rounded-full w-6 h-6 justify-center items-center mb-[5px] text-sm",
+        backgroundColor[status],
+      )}
+    >
+      <span
+        className={classNames(
+          "absolute rounded-full inline-flex justify-center items-center  h-5 w-5 bg-primary-light opacity-50",
+          status === "running" ? "animate-ping" : "hidden",
+        )}
+        aria-hidden="true"
+      />
+      <span
+        className={classNames(
+          "relative inline-flex rounded-full justify-center items-center h-4 w-4",
+        )}
+      >
+        {statusIcon[status]}
+      </span>
+    </div>
+  )
+}
+
+type TailProps = {
+  status: StepStatus
+}
+
+function Tail({ status }: TailProps) {
+  return <div className={classNames("block w-[1px] h-[25px] mb-[5px]", backgroundColor[status])} />
 }
 
 type StepIconProps = {
@@ -81,15 +62,13 @@ type StepIconProps = {
 }
 
 function StepIcon({ index, last = false, status = "waiting" }: StepIconProps): JSX.Element {
-  const renderTail = () => (status === "done" ? <DoneTail /> : <WaitingTail />)
-
   return (
-    <StepIconContainer>
-      <div className="step-item-icon">
+    <div className="flex flex-col items-center justify-between pr-[10px]">
+      <div>
         <StatusIcon index={index} status={status} />
       </div>
-      {last ? null : renderTail()}
-    </StepIconContainer>
+      {last ? null : <Tail status={status} />}
+    </div>
   )
 }
 

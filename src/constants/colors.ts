@@ -20,7 +20,7 @@ export const GREEN100 = "#09C5B3"
 export const BLUE100 = "#253360"
 
 // Purple
-export const PURPLE100 = "#9962C1"
+export const PURPLE100 = "blueviolet"
 export const PURPLE500 = "rgba(106, 26, 163, 0.25)"
 
 // Theme

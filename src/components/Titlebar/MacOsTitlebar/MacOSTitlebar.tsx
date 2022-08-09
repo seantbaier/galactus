@@ -1,88 +1,46 @@
-import { appWindow } from "@tauri-apps/api/window"
-import { styled } from "@stitches/react"
+import React from "react"
 
 // Components
-import TitlebarButton from "./MacOSTitlebarButton"
-import { MacOSCloseIcon, MacOSMaximizeIcon, MacOSMinimizeIcon } from "./MacOSIcons"
+import MacOSTitleButtons from "./MacOSTitlebarButtons"
 
 // Constants
-import { BLACK500, WHITE100 } from "/@/constants/colors"
-import { MAC_OS_TITLEBAR_HEIGHT } from "/@/constants/macos"
-import { PRIMARY_FONT_FAMILY, PROJECT_NAME } from "/@/constants/project"
+import { TITLEBAR_HEIGHT, TITLEBAR_CONTAINER_LENGTH } from "/@/constants/layout"
+import { PROJECT_NAME } from "/@/constants/project"
+import { classNames } from "/@/utils/tailwind"
 
-const TITLEBAR_CONTAINER_LENGTH = "55px"
-
-const MacOSTitlebarContainer = styled("div", {
-  height: MAC_OS_TITLEBAR_HEIGHT,
-  backgroundColor: BLACK500,
-  position: "fixed",
-  top: "0",
-  left: "0",
-  right: "0",
-  paddingLeft: "10px",
-  width: "100%",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  userSelect: "none",
-  borderBottom: `1px solid rgba(0, 0, 0,0.5)`,
-})
-
-const MacOSTitleButtonsContainer = styled("div", {
-  display: "flex",
-  justifyContent: "space-between",
-  width: TITLEBAR_CONTAINER_LENGTH,
-  alignItems: "center",
-
-  "& svg": {
-    display: "none",
-  },
-
-  // psuedo-class
-  "&:hover": {
-    "& svg": {
-      display: "initial",
-    },
-  },
-})
-
-const Title = styled("div", {
-  alignSelf: "center",
-  justifySelf: "center",
-  fontFamily: PRIMARY_FONT_FAMILY,
-  fontSize: "0.8rem",
-  color: WHITE100,
-  width: TITLEBAR_CONTAINER_LENGTH,
-  textTransform: "capitalize",
-})
-
-const Spacer = styled("div", {
-  width: TITLEBAR_CONTAINER_LENGTH,
-})
-
-function MacOSTitlebar(): JSX.Element {
-  const handleMinimizeWindow = () => appWindow.minimize()
-  const handleMaximizeWindow = () => appWindow.maximize()
-  const handleCloseWindow = () => appWindow.close()
-
+function ProjectTitle(): JSX.Element {
   return (
-    <MacOSTitlebarContainer data-tauri-drag-region className="titlebar">
-      <MacOSTitleButtonsContainer>
-        <TitlebarButton onClick={handleMinimizeWindow} action="close">
-          <MacOSCloseIcon />
-        </TitlebarButton>
+    <div
+      className={classNames(
+        "self-center justify-self-center text-sm text-white-main font-sans",
+        TITLEBAR_CONTAINER_LENGTH,
+      )}
+    >
+      {PROJECT_NAME}
+    </div>
+  )
+}
 
-        <TitlebarButton onClick={handleMaximizeWindow} action="minimize">
-          <MacOSMinimizeIcon />
-        </TitlebarButton>
+type MacOSTitlebarProps = {
+  className?: string
+}
 
-        <TitlebarButton onClick={handleCloseWindow} action="maximize">
-          <MacOSMaximizeIcon />
-        </TitlebarButton>
-      </MacOSTitleButtonsContainer>
-      <Title>{PROJECT_NAME}</Title>
-      <Spacer />
-    </MacOSTitlebarContainer>
+function MacOSTitlebar({ className = "" }: MacOSTitlebarProps): JSX.Element {
+  return (
+    <div
+      data-tauri-drag-region
+      className={classNames(
+        "flex justify-between w-full pl-[10px] top-0 left-0 fixed bg-black-main border-b border-black-dark",
+        TITLEBAR_HEIGHT,
+        className,
+      )}
+    >
+      <MacOSTitleButtons />
+      <ProjectTitle />
+
+      {/* Spacer */}
+      <div className={classNames(TITLEBAR_HEIGHT, TITLEBAR_CONTAINER_LENGTH)} />
+    </div>
   )
 }
 
