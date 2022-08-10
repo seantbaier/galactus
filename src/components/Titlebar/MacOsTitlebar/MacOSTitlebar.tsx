@@ -27,21 +27,27 @@ function OnlineStatusIndicator() {
 
   const toggleOnline = () => setOnline(!online)
   return (
-    <button
+    <div
       className={classNames(
         "flex justify-center items-center",
         TITLEBAR_HEIGHT,
         TITLEBAR_CONTAINER_LENGTH,
       )}
-      onClick={toggleOnline}
-      type="button"
     >
-      {online ? (
-        <StatusOnlineIcon className="h-[15px] w-[15px] text-green-600" />
-      ) : (
-        <StatusOfflineIcon className="h-[15px] w-[15px] text-red-900" />
-      )}
-    </button>
+      <button
+        className={classNames("flex justify-center items-center")}
+        onClick={toggleOnline}
+        type="button"
+        aria-describedby="Online status indicator"
+        title="Online status"
+      >
+        {online ? (
+          <StatusOnlineIcon className="h-[15px] w-[15px] text-green-600" />
+        ) : (
+          <StatusOfflineIcon className="h-[15px] w-[15px] text-red-900" />
+        )}
+      </button>
+    </div>
   )
 }
 

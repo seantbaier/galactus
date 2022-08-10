@@ -15,7 +15,10 @@ type StatusIndicatorProps = {
 
 function StatusIndicator({ title, online, onClick, className = "" }: StatusIndicatorProps) {
   return (
-    <div className={classNames("flex justify-center items-center", className)}>
+    <div
+      title={title}
+      className={classNames("flex justify-center items-center cursor-pointer", className)}
+    >
       <span className="text-xs mr-[5px]">{title}</span>
       <button
         type="button"
