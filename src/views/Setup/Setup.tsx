@@ -5,63 +5,15 @@ import { Steps, Step, StepStatus } from "/@/components/Steps"
 import type { StepType } from "/@/components/Steps"
 import { SYSTEM_SETUP_CHECK } from "/@/constants/system"
 import { DOCKER_INSTALLED, LOCALSTACK_INSTALLED } from "/@/constants/commands"
+import {
+  SystemSetupAction,
+  systemSetupReducer,
+  defaultInitialState,
+  SetupConfig,
+} from "./setupReducer"
+import { setSetupConfig, getSetupConfig } from "/@/utils/system"
 
 const TEMP_TIMEOUT_TIME = 3000
-
-type SystemSetupState = {
-  docker: StepType
-  localstack: StepType
-  os: StepType
-}
-
-const defaultInitialState: SystemSetupState = {
-  docker: {
-    title: "Docker is installed",
-    description: "Checking for minimum version of Docker.",
-    status: "waiting",
-    success: SYSTEM_SETUP_CHECK.DOCKER_SUCCESS_RESPONSE,
-  },
-  localstack: {
-    title: "Localstack is installed",
-    description: "Checking for minimum version of Localstack.",
-    status: "waiting",
-    success: SYSTEM_SETUP_CHECK.LOCALSTACK_SUCCESS_RESPONSE,
-  },
-  os: {
-    title: "Checking OS system requirements",
-    description: "Pretending like i'm doing something.",
-    status: "waiting",
-    success: SYSTEM_SETUP_CHECK.OS_SUCCESS_RESPONSE,
-    last: true,
-  },
-}
-
-type SystemSetupActionType = {
-  type: SystemSetupAction
-  payload: StepType
-}
-
-enum SystemSetupAction {
-  dockerIsInstalled = "SET_DOCKER_IS_INSTALLED",
-  localstackIsInstalled = "SET_LOCALSTACK_IS_INSTALLED",
-  osRequirementsMet = "SET_OS_REQUIREMENTS_MET",
-}
-
-const systemSetupReducer = (
-  state: SystemSetupState,
-  action: SystemSetupActionType,
-): SystemSetupState => {
-  switch (action.type) {
-    case SystemSetupAction.dockerIsInstalled:
-      return { ...state, docker: action.payload }
-    case SystemSetupAction.localstackIsInstalled:
-      return { ...state, localstack: action.payload }
-    case SystemSetupAction.osRequirementsMet:
-      return { ...state, os: action.payload }
-    default:
-      return { ...state }
-  }
-}
 
 type SetupProps = {
   setSetupComplete: React.Dispatch<React.SetStateAction<boolean>>
@@ -129,6 +81,15 @@ function Setup({ setSetupComplete }: SetupProps): JSX.Element {
   }, [os, setStatus])
 
   useEffect(() => {
+    const setupConfig: SetupConfig | null = getSetupConfig()
+    const { dockerIsInstalled, localstackIsInstalled, osRequirementsMet } = setupConfig || {}
+
+    if (dockerIsInstalled && localstackIsInstalled && osRequirementsMet) {
+      setSetupComplete(true)
+    }
+  })
+
+  useEffect(() => {
     if (docker.status === "waiting") {
       setStatus(docker, SystemSetupAction.dockerIsInstalled, "running")
       dockerCheck()
@@ -146,6 +107,11 @@ function Setup({ setSetupComplete }: SetupProps): JSX.Element {
 
     if (docker.status === "done" && localstack.status === "done" && os.status === "done") {
       setSetupComplete(true)
+      setSetupConfig({
+        dockerIsInstalled: true,
+        localstackIsInstalled: true,
+        osRequirementsMet: true,
+      })
     }
   }, [docker, os, localstack, dockerCheck, localstackCheck, osCheck, setStatus, setSetupComplete])
 

@@ -1,4 +1,5 @@
-import React from "react"
+import { useState } from "react"
+import { StatusOfflineIcon, StatusOnlineIcon } from "@heroicons/react/outline"
 
 // Components
 import MacOSTitleButtons from "./MacOSTitlebarButtons"
@@ -21,6 +22,29 @@ function ProjectTitle(): JSX.Element {
   )
 }
 
+function OnlineStatusIndicator() {
+  const [online, setOnline] = useState(true)
+
+  const toggleOnline = () => setOnline(!online)
+  return (
+    <button
+      className={classNames(
+        "flex justify-center items-center",
+        TITLEBAR_HEIGHT,
+        TITLEBAR_CONTAINER_LENGTH,
+      )}
+      onClick={toggleOnline}
+      type="button"
+    >
+      {online ? (
+        <StatusOnlineIcon className="h-[15px] w-[15px] text-green-600" />
+      ) : (
+        <StatusOfflineIcon className="h-[15px] w-[15px] text-red-900" />
+      )}
+    </button>
+  )
+}
+
 type MacOSTitlebarProps = {
   className?: string
 }
@@ -37,9 +61,7 @@ function MacOSTitlebar({ className = "" }: MacOSTitlebarProps): JSX.Element {
     >
       <MacOSTitleButtons />
       <ProjectTitle />
-
-      {/* Spacer */}
-      <div className={classNames(TITLEBAR_HEIGHT, TITLEBAR_CONTAINER_LENGTH)} />
+      <OnlineStatusIndicator />
     </div>
   )
 }

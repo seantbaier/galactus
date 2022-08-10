@@ -2,6 +2,7 @@ import { useState } from "react"
 
 import { Setup } from "./views/Setup"
 import AppRoutes from "/@/AppRoutes"
+import { Footer } from "./components/Footer"
 import { Titlebar } from "./components/Titlebar"
 import { Dashboard } from "/@/components/Dashboard"
 
@@ -19,6 +20,7 @@ function App(): JSX.Element {
           {setupComplete ? <AppRoutes /> : <Setup setSetupComplete={setSetupComplete} />}
         </Dashboard>
       </div>
+      <Footer />
     </div>
   )
 }
