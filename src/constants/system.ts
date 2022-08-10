@@ -1,3 +1,5 @@
 export const SYSTEM_SETUP_CHECK = {
   DOCKER_SUCCESS_RESPONSE: "Docker version 20.10.14, build a224086\n",
+  LOCALSTACK_SUCCESS_RESPONSE: "0.14.4\n",
+  OS_SUCCESS_RESPONSE: "Looks good!\n",
 }

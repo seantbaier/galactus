@@ -1,23 +1,16 @@
 // Components
 import StepIcon from "./StepIcon"
-
-export type StepStatus = "waiting" | "done" | "running"
+import type { StepStatus } from "./Steps"
 
 type StepProps = {
   title: string
   description: string
   last?: boolean
-  status?: StepStatus
   index?: number
+  status: StepStatus
 }
 
-function Step({
-  index,
-  title,
-  description,
-  last = false,
-  status = "waiting",
-}: StepProps): JSX.Element {
+function Step({ index, title, description, last = false, status }: StepProps): JSX.Element {
   return (
     <div className="flex">
       <StepIcon status={status} last={last} index={index as number} />

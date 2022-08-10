@@ -9,9 +9,9 @@ use ::std::process;
 fn docker_is_installed() -> String {
     let output = if cfg!(target_os = "windows") {
         process::Command::new("cmd")
-            .args(["/C", "echo hello"])
+            .args(["/C", "docker --version"])
             .output()
-            .expect("failed to execute process")
+            .expect("Docker version 20.10.14, build a224086")
     } else {
         process::Command::new("sh")
             .arg("-c")
@@ -25,11 +25,34 @@ fn docker_is_installed() -> String {
     success
 }
 
+#[tauri::command]
+fn localstack_is_installed() -> String {
+    let output = if cfg!(target_os = "windows") {
+        process::Command::new("cmd")
+            .args(["/C", "localstack --version"])
+            .output()
+            .expect("0.14.4")
+    } else {
+        process::Command::new("sh")
+            .arg("-c")
+            .arg("localstack --version")
+            .output()
+            .expect("0.14.4")
+    };
+
+    // let error = String::from_utf8(output.stderr).unwrap();
+    let success = String::from_utf8(output.stdout).unwrap();
+    success
+}
+
 fn main() {
     docker_is_installed();
 
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![docker_is_installed])
+        .invoke_handler(tauri::generate_handler![
+            docker_is_installed,
+            localstack_is_installed
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -13,6 +13,7 @@ const backgroundColor = {
   done: "bg-primary-dark border border-primary-light",
   running: "bg-primary-light",
   waiting: "bg-white-main",
+  failed: "bg-red-600",
 }
 
 function StatusIcon({ index, status }: StatusIconProps): JSX.Element {
@@ -20,6 +21,7 @@ function StatusIcon({ index, status }: StatusIconProps): JSX.Element {
     done: <CheckIcon className="text-primary-light" />,
     running: <span className="text-primary-white">{index}</span>,
     waiting: <div className="text-tertiary-main">{index}</div>,
+    failed: <div className="text-black-dark">{index}</div>,
   }
 
   return (
@@ -31,7 +33,7 @@ function StatusIcon({ index, status }: StatusIconProps): JSX.Element {
     >
       <span
         className={classNames(
-          "absolute rounded-full inline-flex justify-center items-center  h-5 w-5 bg-primary-light opacity-50",
+          "absolute rounded-full inline-flex justify-center items-center h-5 w-5 bg-primary-light opacity-50",
           status === "running" ? "animate-ping" : "hidden",
         )}
         aria-hidden="true"
@@ -61,7 +63,7 @@ type StepIconProps = {
   index: number
 }
 
-function StepIcon({ index, last = false, status = "waiting" }: StepIconProps): JSX.Element {
+function StepIcon({ index, last = false, status }: StepIconProps): JSX.Element {
   return (
     <div className="flex flex-col items-center justify-between pr-[10px]">
       <div>
