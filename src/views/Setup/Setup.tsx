@@ -3,8 +3,13 @@ import { invoke } from "@tauri-apps/api"
 
 import { Steps, Step, StepStatus } from "/@/components/Steps"
 import type { StepType } from "/@/components/Steps"
-import { SYSTEM_SETUP_CHECK } from "/@/constants/system"
-import { DOCKER_INSTALLED, LOCALSTACK_INSTALLED } from "/@/constants/commands"
+import {
+  DOCKER_INSTALLED_COMMAND,
+  DOCKER_SUCCESS_RESPONSE,
+  LOCALSTACK_INSTALLED_COMMAND,
+  LOCALSTACK_SUCCESS_RESPONSE,
+} from "/@/system/constants"
+
 import {
   SystemSetupAction,
   systemSetupReducer,
@@ -12,6 +17,8 @@ import {
   SetupConfig,
 } from "./setupReducer"
 import { setSetupConfig, getSetupConfig } from "/@/utils/system"
+import { useAsync } from "/@/hooks/useAsync"
+import { dataProvider } from "/@/providers"
 
 const TEMP_TIMEOUT_TIME = 3000
 
@@ -24,6 +31,7 @@ function Setup({ setSetupComplete }: SetupProps): JSX.Element {
     systemSetupReducer,
     defaultInitialState,
   )
+  const { data, run } = useAsync()
 
   const steps = [docker, localstack, os]
 
@@ -52,10 +60,7 @@ function Setup({ setSetupComplete }: SetupProps): JSX.Element {
   }, [])
 
   const dockerCheck = useCallback(async () => {
-    const dockerInstalled = await systemCheck(
-      DOCKER_INSTALLED,
-      SYSTEM_SETUP_CHECK.DOCKER_SUCCESS_RESPONSE,
-    )
+    const dockerInstalled = await systemCheck(DOCKER_INSTALLED_COMMAND, DOCKER_SUCCESS_RESPONSE)
 
     const status: StepStatus = dockerInstalled ? "done" : "failed"
     setStatus(docker, SystemSetupAction.dockerIsInstalled, status, true)
@@ -63,13 +68,17 @@ function Setup({ setSetupComplete }: SetupProps): JSX.Element {
 
   const localstackCheck = useCallback(async () => {
     const localstackInstalled = await systemCheck(
-      LOCALSTACK_INSTALLED,
-      SYSTEM_SETUP_CHECK.LOCALSTACK_SUCCESS_RESPONSE,
+      LOCALSTACK_INSTALLED_COMMAND,
+      LOCALSTACK_SUCCESS_RESPONSE,
     )
 
     const status: StepStatus = localstackInstalled ? "done" : "failed"
     setStatus(localstack, SystemSetupAction.localstackIsInstalled, status, true)
   }, [localstack, systemCheck, setStatus])
+
+  const localstackRunning = useCallback(async () => {
+    await run(dataProvider.localstack.localstackStatus())
+  }, [run])
 
   const osCheck = useCallback(async () => {
     // Temp fake check for requirements
@@ -114,6 +123,10 @@ function Setup({ setSetupComplete }: SetupProps): JSX.Element {
       })
     }
   }, [docker, os, localstack, dockerCheck, localstackCheck, osCheck, setStatus, setSetupComplete])
+
+  useEffect(() => {
+    localstackRunning()
+  }, [localstackRunning, data, localstack])
 
   return (
     <div className="flex justify-center mt-[10%] w-full">

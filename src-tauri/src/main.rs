@@ -68,11 +68,7 @@ fn localstack_is_installed() -> String {
 
 #[tauri::command]
 fn start_localstack() -> String {
-    // TODO run this command instead?
-    // docker run --env-file ./.env.localstack \
-    // --rm -d -p 4566:4566 -p 4510-4559:4510-4559 \
-    // --name localstack localstack/localstack
-    let command = "docker-compose up --build -d";
+    let command = "docker run --env-file ../.env.localstack --rm -d -p 4566:4566 -p 4510-4559:4510-4559 --name localstack localstack/localstack";
     let success_msg = "Creating localstack_main ...";
 
     let output = if cfg!(target_os = "windows") {
