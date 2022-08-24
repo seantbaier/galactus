@@ -1,5 +1,10 @@
 import type { StepType } from "/@/components/Steps"
-import { SYSTEM_SETUP_CHECK } from "/@/constants/system"
+
+import {
+  DOCKER_SUCCESS_RESPONSE,
+  LOCALSTACK_SUCCESS_RESPONSE,
+  OS_SUCCESS_RESPONSE,
+} from "/@/system/constants"
 
 export type SetupConfig = {
   dockerIsInstalled: boolean
@@ -18,19 +23,19 @@ export const defaultInitialState: SystemSetupState = {
     title: "Docker is installed",
     description: "Checking for minimum version of Docker.",
     status: "waiting",
-    success: SYSTEM_SETUP_CHECK.DOCKER_SUCCESS_RESPONSE,
+    success: DOCKER_SUCCESS_RESPONSE,
   },
   localstack: {
     title: "Localstack is installed",
     description: "Checking for minimum version of Localstack.",
     status: "waiting",
-    success: SYSTEM_SETUP_CHECK.LOCALSTACK_SUCCESS_RESPONSE,
+    success: LOCALSTACK_SUCCESS_RESPONSE,
   },
   os: {
     title: "Checking OS system requirements",
     description: "Pretending like i'm doing something.",
     status: "waiting",
-    success: SYSTEM_SETUP_CHECK.OS_SUCCESS_RESPONSE,
+    success: OS_SUCCESS_RESPONSE,
     last: true,
   },
 }

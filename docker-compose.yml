@@ -1,8 +1,10 @@
+# This may not be needed if using the run.sh file
+
 version: "3.8"
 
 services:
   localstack:
-    container_name: localstack
+    container_name: localstack_main
     image: localstack/localstack
     ports:
       - "443:443"
@@ -24,9 +26,4 @@ services:
     volumes:
       - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
-    networks:
-      - localstack
-
-networks:
-  localstack:
-    external: false
+    network_mode: bridge
