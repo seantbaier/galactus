@@ -6,9 +6,9 @@ interface DashboardProps {
 
 function Dashboard({ children }: DashboardProps): JSX.Element {
   return (
-    <div id="dashboard" className="flex w-100">
+    <div id="dashboard" className="flex w-full">
       <Sidebar />
-      <div className="flex w-screen p-[25px] mt-[30px]">{children}</div>
+      <div className="flex w-full p-[25px] mt-[30px]">{children}</div>
     </div>
   )
 }

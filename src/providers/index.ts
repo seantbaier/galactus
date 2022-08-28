@@ -3,6 +3,8 @@ import { Credentials } from "@aws-sdk/types"
 
 import AppSyncProvider from "./aws/appSyncProvider"
 import LocalstackProvider from "./localstackProvider"
+import DockerProvider from "./dockerProvider"
+import OSSystemProvider from "./osSystemProvider"
 import { LOCALSTACK_ENDPOINT, AWS_REGION, APP_URL } from "/@/constants/config"
 
 const credentials: Credentials = {
@@ -40,6 +42,8 @@ function addAuthenticationMiddleware() {
 const dataProvider = {
   appsync: new AppSyncProvider(),
   localstack: new LocalstackProvider(),
+  docker: new DockerProvider(),
+  os: new OSSystemProvider(),
 }
 
 addAuthenticationMiddleware()

@@ -1,7 +1,13 @@
 import { invoke } from "@tauri-apps/api"
 
 import { LOCAL_STORAGE_KEY } from "/@/constants/project"
-import type { SetupConfig } from "/@/views/Setup/setupReducer"
+import { SystemConfigItemStatus, SystemConfigItem } from "./systemReducer"
+
+export type SetupConfig = {
+  dockerIsInstalled: boolean
+  localstackIsInstalled: boolean
+  osRequirementsMet: boolean
+}
 
 export type ProjectStorage = {
   setupConfig: SetupConfig
@@ -30,3 +36,8 @@ export const systemCheck = async (command: string, success: string): Promise<boo
     return result
   })
 }
+
+export const formatSystemConfigPayload = (result: string, expected: string): SystemConfigItem =>
+  result === expected
+    ? { status: SystemConfigItemStatus.done, complete: true }
+    : { status: SystemConfigItemStatus.failed, complete: false }

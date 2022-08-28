@@ -2,15 +2,6 @@ import React from "react"
 
 export type StepStatus = "waiting" | "done" | "running" | "failed"
 
-export type StepType = {
-  title: string
-  description: string
-  last?: boolean
-  id?: string
-  success: string
-  status: StepStatus
-}
-
 type StepsProps = {
   children: React.ReactElement<any, string | React.JSXElementConstructor<any>>[]
 }

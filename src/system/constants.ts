@@ -8,6 +8,7 @@ export const DOCKER_INSTALLED_COMMAND = "docker_is_installed"
 
 // OS
 export const OS_SUCCESS_RESPONSE = "Looks good!\n"
+export const OS_REQUIREMENTS_COMMAND = "os_meets_requirements"
 
 // Localstack
 export const LOCALSTACK_VERSION = "Localstack v1.14.4"

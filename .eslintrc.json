@@ -36,6 +36,7 @@
     // Typescript
     "@typescript-eslint/explicit-module-boundary-types": "warn",
     "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-explicit-any": "off",
 
     // Import
     "import/extensions": "off",

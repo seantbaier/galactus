@@ -1,26 +1,31 @@
 import { CheckIcon } from "@radix-ui/react-icons"
 
-import type { StepStatus } from "./Steps"
-
+import { SystemConfigItemStatus } from "/@/system"
 import { classNames } from "/@/utils/tailwind"
 
 type StatusIconProps = {
   index: number
-  status: StepStatus
+  status: SystemConfigItemStatus
 }
 
-const backgroundColor = {
+type StatusOptions = {
+  [key: string]: any
+}
+
+const backgroundColor: StatusOptions = {
   done: "bg-primary-dark border border-primary-light",
-  running: "bg-primary-light",
-  waiting: "bg-white-main",
+  running: "bg-primary-dark border border-primary-light",
+  pending: "bg-primary-light",
+  idle: "bg-white-main",
   failed: "bg-red-600",
 }
 
 function StatusIcon({ index, status }: StatusIconProps): JSX.Element {
-  const statusIcon = {
+  const statusIcon: StatusOptions = {
     done: <CheckIcon className="text-primary-light" />,
-    running: <span className="text-primary-white">{index}</span>,
-    waiting: <div className="text-tertiary-main">{index}</div>,
+    running: <CheckIcon className="text-primary-light" />,
+    pending: <span className="text-primary-white">{index}</span>,
+    idle: <div className="text-tertiary-main">{index}</div>,
     failed: <div className="text-black-dark">{index}</div>,
   }
 
@@ -34,7 +39,7 @@ function StatusIcon({ index, status }: StatusIconProps): JSX.Element {
       <span
         className={classNames(
           "absolute rounded-full inline-flex justify-center items-center h-5 w-5 bg-primary-light opacity-50",
-          status === "running" ? "animate-ping" : "hidden",
+          status === "pending" ? "animate-ping" : "hidden",
         )}
         aria-hidden="true"
       />
@@ -50,7 +55,7 @@ function StatusIcon({ index, status }: StatusIconProps): JSX.Element {
 }
 
 type TailProps = {
-  status: StepStatus
+  status: SystemConfigItemStatus
 }
 
 function Tail({ status }: TailProps) {
@@ -59,7 +64,7 @@ function Tail({ status }: TailProps) {
 
 type StepIconProps = {
   last?: boolean
-  status: StepStatus
+  status: SystemConfigItemStatus
   index: number
 }
 

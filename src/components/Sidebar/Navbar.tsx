@@ -2,7 +2,7 @@ import * as NavigationMenu from "@radix-ui/react-navigation-menu"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import { NavLink } from "react-router-dom"
 import { HomeIcon } from "@radix-ui/react-icons"
-import { BookOpenIcon } from "@heroicons/react/outline"
+import { BookOpenIcon, CogIcon } from "@heroicons/react/outline"
 
 import { PRIMARY_LIGHT } from "/@/constants/colors"
 import { classNames } from "/@/utils/tailwind"
@@ -44,6 +44,11 @@ function Navigation(): JSX.Element {
             tooltip="Docs"
             to="/docs"
             icon={<BookOpenIcon color={PRIMARY_LIGHT} />}
+          />
+          <NavigationMenuItem
+            tooltip="System"
+            to="/system"
+            icon={<CogIcon color={PRIMARY_LIGHT} />}
           />
         </NavigationMenu.List>
       </NavigationMenu.Root>

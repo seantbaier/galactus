@@ -1,10 +1,8 @@
 import { useCallback, useState, useRef, useEffect } from "react"
 
 import { Toast } from "/@/components/Toast"
-import { LOCALSTACK_VERSION, DOCKER_VERSION } from "/@/system/constants"
+import { LOCALSTACK_VERSION, DOCKER_VERSION, useSystem, SystemConfigItemStatus } from "/@/system"
 
-import { useSystem } from "/@/system/systemContext"
-import { SystemConfigItemStatus } from "/@/system/systemReducer"
 import { classNames } from "/@/utils/tailwind"
 
 type StatusOptionsType = {
@@ -13,7 +11,7 @@ type StatusOptionsType = {
 
 const statusOptions: StatusOptionsType = {
   running: "bg-green-600",
-  waiting: "animate-pulse bg-yellow-900",
+  pending: "animate-pulse bg-yellow-900",
   failed: "bg-red-600",
 }
 
@@ -84,6 +82,7 @@ function LocalstackStatus(): JSX.Element {
   const [action, setAction] = useState<"starting" | "stopping">()
 
   const { localstack, startLocalstackServices, stopLocalstackServices } = useSystem()
+  const loclastackStatus = localstack?.status ? localstack.status : SystemConfigItemStatus.failed
 
   const startLocalstack = useCallback(async () => {
     if (localstack.status === SystemConfigItemStatus.running) {
@@ -109,7 +108,7 @@ function LocalstackStatus(): JSX.Element {
       <StatusIndicator
         title={LOCALSTACK_VERSION}
         setOpen={setOpen}
-        status={localstack.status}
+        status={loclastackStatus}
         className="mr-[20px]"
         callback={startLocalstack}
       />
@@ -119,13 +118,14 @@ function LocalstackStatus(): JSX.Element {
 }
 
 function DockerStatus(): JSX.Element {
-  const [status, setStatus] = useState<SystemConfigItemStatus>(SystemConfigItemStatus.waiting)
+  const [status, setStatus] = useState<SystemConfigItemStatus>(SystemConfigItemStatus.idle)
 
   const { localstack } = useSystem()
+  const dockerStatus = localstack?.status ? localstack.status : SystemConfigItemStatus.failed
 
   useEffect(() => {
-    setStatus(localstack.status)
-  }, [localstack.status])
+    setStatus(dockerStatus)
+  }, [dockerStatus])
 
   return (
     <div>

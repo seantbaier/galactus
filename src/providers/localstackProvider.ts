@@ -1,13 +1,16 @@
 import axios from "axios"
-import { LOCALSTACK_ENDPOINT } from "../constants/config"
 import { invoke } from "@tauri-apps/api"
+
+import { LOCALSTACK_ENDPOINT } from "/@/constants/config"
 
 import {
   LOCALSTACK_START_COMMAND,
   LOCALSTACK_STOP_COMMAND,
   LOCALSTACK_NETWORK_ERROR,
   LOCALSTACK_RUNNING_CODE,
-} from "/@/system/constants"
+  LOCALSTACK_INSTALLED_COMMAND,
+  LOCALSTACK_SUCCESS_RESPONSE,
+} from "/@/system"
 
 type LocalStackStatusResponse = {
   code: string
@@ -20,10 +23,28 @@ class LocalstackProvider {
 
   public stopLocalstackCommand: string
 
+  public localstackInstalledCommand: string
+
+  public localstackSuccessResponse: string
+
   constructor() {
     this.baseUrl = LOCALSTACK_ENDPOINT
     this.startLocalstackCommand = LOCALSTACK_START_COMMAND
     this.stopLocalstackCommand = LOCALSTACK_STOP_COMMAND
+    this.localstackInstalledCommand = LOCALSTACK_INSTALLED_COMMAND
+    this.localstackSuccessResponse = LOCALSTACK_SUCCESS_RESPONSE
+  }
+
+  public installationCheck = async (): Promise<any> => {
+    return invoke(this.localstackInstalledCommand, {
+      name: "Checking for Localstack installation",
+    })
+      .then(response => {
+        return Promise.resolve(response)
+      })
+      .catch(err => {
+        return Promise.reject(err)
+      })
   }
 
   public localstackStatus = async (): Promise<LocalStackStatusResponse> => {
