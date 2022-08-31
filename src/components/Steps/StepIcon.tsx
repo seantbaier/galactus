@@ -1,6 +1,6 @@
 import { CheckIcon } from "@radix-ui/react-icons"
 
-import { SystemConfigItemStatus } from "/@/system"
+import { SystemConfigItemStatus } from "/@/views/System"
 import { classNames } from "/@/utils/tailwind"
 
 type StatusIconProps = {

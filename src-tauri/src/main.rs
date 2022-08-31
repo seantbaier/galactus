@@ -4,6 +4,25 @@
 )]
 
 use ::std::process;
+use serde::ser::{Serialize, SerializeStruct, Serializer};
+
+struct Response {
+    success: String,
+    error: String,
+}
+
+impl Serialize for Response {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        // 2 is the number of fields in the struct.
+        let mut state = serializer.serialize_struct("Response", 2)?;
+        state.serialize_field("success", &self.success)?;
+        state.serialize_field("error", &self.error)?;
+        state.end()
+    }
+}
 
 #[tauri::command]
 fn list_graphql_apis() -> String {
@@ -67,7 +86,7 @@ fn localstack_is_installed() -> String {
 }
 
 #[tauri::command]
-fn start_localstack() -> String {
+fn start_localstack() -> Response {
     let command = "docker run --env-file ../.env.localstack --rm -d -p 4566:4566 -p 4510-4559:4510-4559 --name localstack localstack/localstack";
     let success_msg = "Creating localstack_main ...";
 
@@ -84,9 +103,11 @@ fn start_localstack() -> String {
             .expect(success_msg)
     };
 
-    // let error = String::from_utf8(output.stderr).unwrap();
+    let error = String::from_utf8(output.stderr).unwrap();
     let success = String::from_utf8(output.stdout).unwrap();
-    success
+
+    let response = Response { success, error };
+    response
 }
 
 #[tauri::command]

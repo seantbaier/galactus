@@ -10,9 +10,14 @@ import {
   LOCALSTACK_RUNNING_CODE,
   LOCALSTACK_INSTALLED_COMMAND,
   LOCALSTACK_SUCCESS_RESPONSE,
-} from "/@/system"
+} from "/@/constants/system"
 
-type LocalStackStatusResponse = {
+export interface InvokeCommandResponse {
+  success?: string
+  error?: string
+}
+
+export interface LocalStackStatusResponse extends InvokeCommandResponse {
   code: string
 }
 
@@ -68,23 +73,31 @@ class LocalstackProvider {
       })
   }
 
-  public startLocalstackServices = async (): Promise<any> => {
-    return invoke(this.startLocalstackCommand, { name: "Start Localstack" })
-      .then(response => {
-        Promise.resolve(response)
+  public startLocalstackServices = async (): Promise<InvokeCommandResponse> => {
+    return invoke<InvokeCommandResponse>(this.startLocalstackCommand, { name: "Start Localstack" })
+      .then(({ success, error }) => {
+        if (error) {
+          return Promise.reject(error)
+        }
+
+        return Promise.resolve({ success, error })
       })
       .catch(err => {
-        Promise.reject(err)
+        return Promise.reject(err)
       })
   }
 
   public stopLocalstackServices = async (): Promise<any> => {
-    return invoke(this.stopLocalstackCommand, { name: "Stop Localstack" })
-      .then(response => {
-        Promise.resolve(response)
+    return invoke<InvokeCommandResponse>(this.stopLocalstackCommand, { name: "Stop Localstack" })
+      .then(({ success, error }) => {
+        if (error) {
+          return Promise.reject(error)
+        }
+
+        return Promise.resolve({ success, error })
       })
       .catch(err => {
-        Promise.reject(err)
+        return Promise.reject(err)
       })
   }
 }

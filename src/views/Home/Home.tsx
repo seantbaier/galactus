@@ -1,12 +1,15 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query"
+import { CreateGraphqlApiCommandInput } from "@aws-sdk/client-appsync"
 
 import { dataProvider } from "/@/providers"
 import { classNames } from "/@/utils/tailwind"
-import { CreateGraphqlApiCommandInput } from "@aws-sdk/client-appsync"
+import { TableWidget } from "/@/components/widgets/TableWidget"
 
 function Home(): JSX.Element {
   const queryClient = useQueryClient()
-  const { data: apis } = useQuery(["graphqlApis"], () => dataProvider.appsync.listGraphqlApis())
+  const { data } = useQuery(["graphqlApis"], () => dataProvider.appsync.listGraphqlApis())
+
+  //   console.log("apis", data)
 
   const mutation = useMutation(dataProvider.appsync.createGraphqlApi, {
     onSuccess: () => {
@@ -36,6 +39,7 @@ function Home(): JSX.Element {
       <div className="mb-4">
         <h1 className="text-xl mb-4">Dashboard</h1>
         <h2 className="text-lg">AppSync Graphql API</h2>
+        {/* <TableWidget /> */}
       </div>
       <button
         onClick={handleOnClick}

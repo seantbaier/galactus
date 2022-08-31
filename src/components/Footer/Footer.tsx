@@ -1,5 +1,5 @@
 import { classNames } from "/@/utils/tailwind"
-import { LocalstackStatus, DockerStatus } from "/@/components/StatusIndicator"
+import { LocalstackStatusIndicator, DockerStatusIndicator } from "/@/components/StatusIndicator"
 
 export type FooterProps = {
   className?: string
@@ -14,8 +14,8 @@ function Footer({ className = "" }: FooterProps): JSX.Element {
         className,
       )}
     >
-      <LocalstackStatus />
-      <DockerStatus />
+      <LocalstackStatusIndicator />
+      <DockerStatusIndicator />
     </div>
   )
 }

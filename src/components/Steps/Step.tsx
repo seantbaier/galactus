@@ -1,6 +1,6 @@
 // Components
 import StepIcon from "./StepIcon"
-import { SystemConfigItemStatus } from "/@/system"
+import { SystemConfigItemStatus } from "/@/views/System"
 
 type StepProps = {
   title?: string

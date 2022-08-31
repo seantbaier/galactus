@@ -1,17 +1,66 @@
 import { Steps, Step } from "/@/components/Steps"
 
-import { useSystem } from "/@/system"
-import type { SystemConfigItem } from "/@/system"
+import { useLocalstackInstalledQuery } from "/@/hooks/useLocalstack"
+import {
+  DOCKER_SUCCESS_RESPONSE,
+  LOCALSTACK_SUCCESS_RESPONSE,
+  OS_SUCCESS_RESPONSE,
+} from "/@/constants/system"
+
+export enum SystemConfigItemStatus {
+  idle = "idle",
+  pending = "pending",
+  running = "running",
+  done = "done",
+  failed = "failed",
+}
+
+export interface SystemConfigItem {
+  title?: string
+  description?: string
+  id?: string
+  success?: string
+  status?: SystemConfigItemStatus
+  complete?: boolean
+}
+
+const steps = [
+  {
+    title: "Docker is installed",
+    description: "Checking for minimum version of Docker.",
+    status: SystemConfigItemStatus.idle,
+    success: DOCKER_SUCCESS_RESPONSE,
+    complete: false,
+  },
+  {
+    title: "Localstack is installed",
+    description: "Checking for minimum version of Localstack.",
+    status: SystemConfigItemStatus.idle,
+    success: LOCALSTACK_SUCCESS_RESPONSE,
+    complete: false,
+  },
+  {
+    title: "Checking OS system requirements",
+    description: "Pretending like i'm doing something.",
+    status: SystemConfigItemStatus.idle,
+    success: OS_SUCCESS_RESPONSE,
+    complete: false,
+  },
+  {
+    title: "System is check is complete",
+    status: SystemConfigItemStatus.idle,
+    complete: false,
+  },
+]
 
 function System(): JSX.Element {
-  const { docker, localstack, os, systemSetupComplete } = useSystem()
-  const steps = [docker, localstack, os]
+  const { data: localstackIsInstalled } = useLocalstackInstalledQuery()
 
   return (
     <div className="flex justify-center mt-[10%] w-full">
       <div className="flex-col justify-center">
         <h1 className="text-white-main mb-[15px] text-center text-xl font-sans">
-          {systemSetupComplete ? "System Requirements Met!" : "Checking for Dependencies"}
+          {localstackIsInstalled ? "System Requirements Met!" : "Checking for Dependencies"}
         </h1>
 
         <div className="flex justify-center p-[50px]">
