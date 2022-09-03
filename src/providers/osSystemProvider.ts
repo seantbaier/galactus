@@ -1,4 +1,4 @@
-import { OS_REQUIREMENTS_COMMAND, OS_SUCCESS_RESPONSE } from "/@/system"
+import { OS_REQUIREMENTS_COMMAND, OS_SUCCESS_RESPONSE } from "/@/constants/system"
 
 class OSSystemProvider {
   public osMeetsRequirementsCommand: string

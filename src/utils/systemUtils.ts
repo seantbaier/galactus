@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api"
 
 import { LOCAL_STORAGE_KEY } from "/@/constants/project"
-import { SystemConfigItemStatus, SystemConfigItem } from "./systemReducer"
+import { SystemConfigItemStatus, SystemConfigItem } from "/@/views/System"
 
 export type SetupConfig = {
   dockerIsInstalled: boolean

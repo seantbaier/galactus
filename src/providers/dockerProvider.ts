@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api"
 
-import { DOCKER_INSTALLED_COMMAND, DOCKER_SUCCESS_RESPONSE } from "/@/system"
+import { DOCKER_INSTALLED_COMMAND, DOCKER_SUCCESS_RESPONSE } from "/@/constants/system"
 
 class DockerProvider {
   public dockerInstalledCommand: string

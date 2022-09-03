@@ -1,3 +1,5 @@
-import { StatusIndicator, DockerStatus, LocalstackStatus } from "./StatusIndicator"
+import StatusIndicator from "./StatusIndicator"
+import DockerStatusIndicator from "./DockerStatusIndicator"
+import LocalstackStatusIndicator from "./LocalstackStatusIndicator"
 
-export { StatusIndicator, DockerStatus, LocalstackStatus }
+export { StatusIndicator, DockerStatusIndicator, LocalstackStatusIndicator }

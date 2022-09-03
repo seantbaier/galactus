@@ -1,21 +1,22 @@
-// const StitchesButton = styled("button", {
-//   borderRadius: "8px",
-//   border: "1px solid transparent",
-//   padding: "0.6em 1.2em",
-//   fontSize: "1em",
-//   fontWeight: "500",
-//   fontFamily: "inherit",
-//   backgroundColor: "#1a1a1a",
-//   cursor: "pointer",
-//   transition: "border-color 0.25s",
-// })
+import { classNames } from "/@/utils/tailwind"
 
 interface ButtonProps {
   text: string
+  onClick: () => void
 }
 
-function Button({ text }: ButtonProps): JSX.Element {
-  return <button type="button">{text}</button>
+function Button({ text, onClick }: ButtonProps): JSX.Element {
+  return (
+    <button
+      onClick={onClick}
+      className={classNames(
+        "px-6 py-2 rounded-3xl bg-black-main font-semibold text-white-main border-4 border-primary-light",
+      )}
+      type="button"
+    >
+      {text}
+    </button>
+  )
 }
 
 export default Button

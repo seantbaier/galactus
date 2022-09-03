@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from "axios"
 import { Credentials } from "@aws-sdk/types"
 
 import AppSyncProvider from "./aws/appSyncProvider"
+import DynamodbProvider from "./aws/dynamodbProvider"
 import LocalstackProvider from "./localstackProvider"
 import DockerProvider from "./dockerProvider"
 import OSSystemProvider from "./osSystemProvider"
@@ -40,10 +41,11 @@ function addAuthenticationMiddleware() {
 }
 
 const dataProvider = {
-  appsync: new AppSyncProvider(),
   localstack: new LocalstackProvider(),
   docker: new DockerProvider(),
   os: new OSSystemProvider(),
+  appsync: new AppSyncProvider(),
+  dynamodb: new DynamodbProvider(),
 }
 
 addAuthenticationMiddleware()
