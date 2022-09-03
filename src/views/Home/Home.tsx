@@ -3,13 +3,12 @@ import { CreateGraphqlApiCommandInput } from "@aws-sdk/client-appsync"
 
 import { dataProvider } from "/@/providers"
 import { classNames } from "/@/utils/tailwind"
-import { TableWidget } from "/@/components/widgets/TableWidget"
+import { AppSyncTableWidget } from "/@/components/widgets/TableWidgets"
 
 function Home(): JSX.Element {
   const queryClient = useQueryClient()
   const { data } = useQuery(["graphqlApis"], () => dataProvider.appsync.listGraphqlApis())
-
-  //   console.log("apis", data)
+  const { graphqlApis = [] } = data || {}
 
   const mutation = useMutation(dataProvider.appsync.createGraphqlApi, {
     onSuccess: () => {
@@ -20,15 +19,14 @@ function Home(): JSX.Element {
   const handleOnClick = () => {
     const commandInput: CreateGraphqlApiCommandInput = {
       name: "local-appsync-api",
-      //       // logConfig: input.logConfig,
       authenticationType: "API_KEY",
+      //       // logConfig: input.logConfig,
       //       // userPoolConfig: input.userPoolConfig,
       //       // openIDConnectConfig: input.openIDConnectConfig,
       //       // tags: input.tags,
       //       // additionalAuthenticationProviders: input.additionalAuthenticationProviders,
       //       // xrayEnabled: input.xrayEnabled,
       //       // lambdaAuthorizerConfig: input.lambdaAuthorizerConfig,
-      //     }
     }
 
     mutation.mutate(commandInput)
@@ -38,8 +36,8 @@ function Home(): JSX.Element {
     <div>
       <div className="mb-4">
         <h1 className="text-xl mb-4">Dashboard</h1>
-        <h2 className="text-lg">AppSync Graphql API</h2>
-        {/* <TableWidget /> */}
+        <h2 className="text-lg mb-2">AppSync Graphql API</h2>
+        <AppSyncTableWidget items={graphqlApis} />
       </div>
       <button
         onClick={handleOnClick}

@@ -6,6 +6,9 @@ import {
   CreateGraphqlApiCommand,
   CreateGraphqlApiCommandInput,
   CreateGraphqlApiCommandOutput,
+  DeleteGraphqlApiCommandInput,
+  DeleteGraphqlApiCommandOutput,
+  DeleteGraphqlApiCommand,
 } from "@aws-sdk/client-appsync"
 
 import { awsConfig } from "/@/providers"
@@ -75,13 +78,37 @@ class AppSyncProvider {
     return this.client
       .send(command)
       .then((data: CreateGraphqlApiCommandOutput) => {
-        const graphqlApi = data || {}
+        const { $metadata, graphqlApi } = data || {}
 
-        if (!graphqlApi || !Array.isArray(graphqlApi)) {
+        if (!graphqlApi) {
           Promise.reject()
         }
 
-        return Promise.resolve(graphqlApi)
+        return Promise.resolve({ $metadata, graphqlApi })
+      })
+      .catch(err => {
+        const { $response } = err || {}
+        let error = err
+        if ($response) {
+          error = $response
+        }
+
+        return Promise.reject(error)
+      })
+  }
+
+  public deleteGraphqlApi = async ({
+    apiId,
+  }: DeleteGraphqlApiCommandInput): Promise<DeleteGraphqlApiCommandOutput> => {
+    const command = new DeleteGraphqlApiCommand({ apiId })
+    return this.client
+      .send(command)
+      .then((data: DeleteGraphqlApiCommandOutput) => {
+        const { $metadata } = data || {}
+
+        return Promise.resolve({
+          $metadata,
+        })
       })
       .catch(err => {
         const { $response } = err || {}
