@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-table"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { TrashIcon, UpdateIcon } from "@radix-ui/react-icons"
+import { CreateTableCommandInput } from "@aws-sdk/client-dynamodb"
 import {
   CreateGraphqlApiCommandInput,
   DeleteGraphqlApiCommandInput,
@@ -15,59 +16,52 @@ import {
 
 import { dataProvider } from "/@/providers"
 import { classNames } from "/@/utils/tailwind"
+import { useCreateDynamodbTable, useListDynamodbTables } from "/@/hooks/useDynamodb"
 
-type TableWidgetProps = {
-  items: any[]
+type DynamodbTableWidgetProps = {
+  className?: string
 }
 
-function AppSyncTableWidget({ items = [] }: TableWidgetProps): JSX.Element {
+function DynamodbTableWidget({ className = "" }: DynamodbTableWidgetProps): JSX.Element {
   const rerender = useReducer(() => ({}), {})[1]
+  const { data: tables = [] } = useListDynamodbTables()
+  console.log("tables", tables)
 
-  const queryClient = useQueryClient()
-  const deleteGraphqlApi = useMutation(
-    (apiId: DeleteGraphqlApiCommandInput) => dataProvider.appsync.deleteGraphqlApi(apiId),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["graphqlApis"])
-      },
-    },
-  )
+  const createTableMutation = useCreateDynamodbTable()
 
-  const onDelete = (info: any) => {
-    const {
-      cell: {
-        row: { original },
-      },
-    } = info
-    const apiId = original?.apiId
-    deleteGraphqlApi.mutate({ apiId })
-  }
+  const onCreate = () => {
+    const tableName = "expenses"
+    const project = "buckets"
+    const stage = "local"
 
-  const mutation = useMutation(dataProvider.appsync.createGraphqlApi, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["graphqlApis"])
-    },
-  })
-
-  const handleOnClick = () => {
-    const commandInput: CreateGraphqlApiCommandInput = {
-      name: "local-appsync-api",
-      authenticationType: "API_KEY",
-      //       // logConfig: input.logConfig,
-      //       // userPoolConfig: input.userPoolConfig,
-      //       // openIDConnectConfig: input.openIDConnectConfig,
-      //       // tags: input.tags,
-      //       // additionalAuthenticationProviders: input.additionalAuthenticationProviders,
-      //       // xrayEnabled: input.xrayEnabled,
-      //       // lambdaAuthorizerConfig: input.lambdaAuthorizerConfig,
+    const commandInput: CreateTableCommandInput = {
+      AttributeDefinitions: [
+        { AttributeName: "PK", AttributeType: "S" },
+        { AttributeName: "SK", AttributeType: "S" },
+      ],
+      TableName: `${project}-${tableName}-${stage}`,
+      KeySchema: [
+        { AttributeName: "PK", KeyType: "HASH" },
+        { AttributeName: "SK", KeyType: "RANGE" },
+      ],
+      BillingMode: "PAY_PER_REQUEST",
+      //   LocalSecondaryIndexes: input.LocalSecondaryIndexes, ?
+      //   GlobalSecondaryIndexes: input.GlobalSecondaryIndexes,
+      //   ProvisionedThroughput: input.ProvisionedThroughput,
+      //   StreamSpecification: input.StreamSpecification,
+      //   SSESpecification: input.SSESpecification,
+      //   Tags: input.Tags,
+      //   TableClass: input.TableClass,
     }
 
-    mutation.mutate(commandInput)
+    createTableMutation.mutate(commandInput)
   }
 
-  const columnHelper = createColumnHelper<GraphqlApi>()
+  const onDelete = (info: any) => {
+    console.log("delete")
+  }
 
-  const renderAuthType = () => <span>Auth Type</span>
+  const columnHelper = createColumnHelper<any>()
 
   const renderDeleteIcon = (info: any) => {
     return (
@@ -78,19 +72,12 @@ function AppSyncTableWidget({ items = [] }: TableWidgetProps): JSX.Element {
   }
 
   const appSyncColumns = [
-    columnHelper.accessor("name", {
-      header: () => "Name",
+    columnHelper.accessor("TableName", {
+      header: () => "Table Name",
       cell: info => info.renderValue(),
     }),
-    columnHelper.accessor("apiId", {
+    columnHelper.accessor("ItemCount", {
       cell: info => info.getValue(),
-    }),
-    columnHelper.accessor("authenticationType", {
-      header: renderAuthType,
-    }),
-    columnHelper.accessor(row => row?.uris?.GRAPHQL, {
-      id: "Graphql Url",
-      header: "Graphql Url",
     }),
     columnHelper.accessor("delete", {
       header: "",
@@ -99,23 +86,23 @@ function AppSyncTableWidget({ items = [] }: TableWidgetProps): JSX.Element {
   ]
 
   const table = useReactTable({
-    data: items,
+    data: [],
     columns: appSyncColumns,
     getCoreRowModel: getCoreRowModel(),
   })
 
   return (
-    <div>
+    <div className={classNames("my-6", className)}>
       <div className="flex items-center mb-2">
-        <h2 className="text-lg mr-4">AppSync Graphql API</h2>
+        <h2 className="text-lg mr-4">Dynamodb</h2>
 
-        <button onClick={() => rerender()} className="text-primary-light" type="button">
+        <button onClick={rerender} className="text-primary-light" type="button">
           <UpdateIcon />
         </button>
       </div>
 
       <div className="rounded-lg bg-black-dark px-4 py-2 mb-2">
-        <table className="mb-2">
+        <table className="mb-2 w-full">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
               <tr key={headerGroup.id} className="border-b border-white-light">
@@ -146,7 +133,7 @@ function AppSyncTableWidget({ items = [] }: TableWidgetProps): JSX.Element {
         </table>
         <div className="flex justify-between items-center">
           <button
-            onClick={handleOnClick}
+            onClick={onCreate}
             className={classNames(
               "text-xs px-6 py-2 rounded-3xl bg-black-main font-semibold text-white-main border-4 border-primary-light",
             )}
@@ -160,4 +147,4 @@ function AppSyncTableWidget({ items = [] }: TableWidgetProps): JSX.Element {
   )
 }
 
-export default AppSyncTableWidget
+export default DynamodbTableWidget
