@@ -1,22 +1,15 @@
 import { useReducer } from "react"
-import {
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-  createColumnHelper,
-} from "@tanstack/react-table"
-import { useQueryClient, useMutation } from "@tanstack/react-query"
-import { TrashIcon, UpdateIcon } from "@radix-ui/react-icons"
+import { createColumnHelper } from "@tanstack/react-table"
+import { UpdateIcon } from "@radix-ui/react-icons"
 import { CreateTableCommandInput } from "@aws-sdk/client-dynamodb"
-import {
-  CreateGraphqlApiCommandInput,
-  DeleteGraphqlApiCommandInput,
-  GraphqlApi,
-} from "@aws-sdk/client-appsync"
 
-import { dataProvider } from "/@/providers"
 import { classNames } from "/@/utils/tailwind"
-import { useCreateDynamodbTable, useListDynamodbTables } from "/@/hooks/useDynamodb"
+import {
+  useCreateDynamodbTable,
+  useDeleteDynamodbTable,
+  useListDynamodbTables,
+} from "/@/hooks/useDynamodb"
+import { Table, DeleteButton } from "/@/components/Tables"
 
 type DynamodbTableWidgetProps = {
   className?: string
@@ -24,10 +17,11 @@ type DynamodbTableWidgetProps = {
 
 function DynamodbTableWidget({ className = "" }: DynamodbTableWidgetProps): JSX.Element {
   const rerender = useReducer(() => ({}), {})[1]
-  const { data: tables = [] } = useListDynamodbTables()
-  console.log("tables", tables)
+  const { data } = useListDynamodbTables()
+  const { TableNames: dynamodbTableNames = [] } = data || {}
 
   const createTableMutation = useCreateDynamodbTable()
+  const deleteTableMutation = useDeleteDynamodbTable()
 
   const onCreate = () => {
     const tableName = "expenses"
@@ -58,38 +52,28 @@ function DynamodbTableWidget({ className = "" }: DynamodbTableWidgetProps): JSX.
   }
 
   const onDelete = (info: any) => {
-    console.log("delete")
+    const {
+      row: { original },
+    } = info
+
+    deleteTableMutation.mutate({ TableName: original })
   }
+
+  const renderDeleteButton = (info: any) => <DeleteButton info={info} onDelete={onDelete} />
 
   const columnHelper = createColumnHelper<any>()
 
-  const renderDeleteIcon = (info: any) => {
-    return (
-      <button className="flex justify-end" onClick={() => onDelete(info)} type="button">
-        <TrashIcon className="text-red-900" />
-      </button>
-    )
-  }
-
-  const appSyncColumns = [
+  const dynamodbTableColumns = [
     columnHelper.accessor("TableName", {
-      header: () => "Table Name",
-      cell: info => info.renderValue(),
-    }),
-    columnHelper.accessor("ItemCount", {
-      cell: info => info.getValue(),
+      header: "Table Name",
+      cell: info => info.row.original,
     }),
     columnHelper.accessor("delete", {
+      id: "delete-button",
       header: "",
-      cell: (info: any) => renderDeleteIcon(info),
+      cell: (info: any) => renderDeleteButton(info),
     }),
   ]
-
-  const table = useReactTable({
-    data: [],
-    columns: appSyncColumns,
-    getCoreRowModel: getCoreRowModel(),
-  })
 
   return (
     <div className={classNames("my-6", className)}>
@@ -101,47 +85,17 @@ function DynamodbTableWidget({ className = "" }: DynamodbTableWidgetProps): JSX.
         </button>
       </div>
 
-      <div className="rounded-lg bg-black-dark px-4 py-2 mb-2">
-        <table className="mb-2 w-full">
-          <thead>
-            {table.getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id} className="border-b border-white-light">
-                {headerGroup.headers.map(header => (
-                  <th
-                    key={header.id}
-                    className="py-2 font-normal text-white-main text-xs text-left"
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map(row => (
-              <tr key={row.id} className="border-b border-white-light">
-                {row.getVisibleCells().map(cell => (
-                  <td key={cell.id} className="min-w-[50px] py-2 text-xs pr-4">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="flex justify-between items-center">
-          <button
-            onClick={onCreate}
-            className={classNames(
-              "text-xs px-6 py-2 rounded-3xl bg-black-main font-semibold text-white-main border-4 border-primary-light",
-            )}
-            type="button"
-          >
-            Create
-          </button>
-        </div>
+      <Table data={dynamodbTableNames} columns={dynamodbTableColumns} />
+      <div className="flex justify-between items-center">
+        <button
+          onClick={onCreate}
+          className={classNames(
+            "text-xs px-6 py-2 rounded-3xl bg-black-main font-semibold text-white-main border-4 border-primary-light",
+          )}
+          type="button"
+        >
+          Create
+        </button>
       </div>
     </div>
   )

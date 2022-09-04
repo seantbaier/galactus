@@ -6,6 +6,9 @@ import {
   ListTablesCommandInput,
   ListTablesCommandOutput,
   ListTablesCommand,
+  DeleteTableCommandInput,
+  DeleteTableCommandOutput,
+  DeleteTableCommand,
 } from "@aws-sdk/client-dynamodb"
 
 import { awsConfig } from "/@/providers"
@@ -31,7 +34,8 @@ class AppSyncProvider {
     return this.client
       .send(command)
       .then((data: ListTablesCommandOutput) => {
-        const { TableNames = [], LastEvaluatedTableName, $metadata } = data || {}
+        const { TableNames, LastEvaluatedTableName, $metadata } = data || {}
+        console.log("data", data)
 
         if (!TableNames || !Array.isArray(TableNames)) {
           Promise.reject()
@@ -84,6 +88,33 @@ class AppSyncProvider {
         return Promise.resolve({ $metadata, TableDescription })
       })
       .catch(err => {
+        const { $response } = err || {}
+        let error = err
+        if ($response) {
+          error = $response
+        }
+
+        return Promise.reject(error)
+      })
+  }
+
+  public deleteDynamodbTable = async (
+    input: DeleteTableCommandInput,
+  ): Promise<DeleteTableCommandOutput> => {
+    console.log("input", input)
+    const command = new DeleteTableCommand(input)
+    return this.client
+      .send(command)
+      .then((data: DeleteTableCommandOutput) => {
+        console.log("data", data)
+        const { $metadata } = data || {}
+
+        return Promise.resolve({
+          $metadata,
+        })
+      })
+      .catch(err => {
+        console.log("err", err)
         const { $response } = err || {}
         let error = err
         if ($response) {
