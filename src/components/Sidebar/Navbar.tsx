@@ -3,9 +3,11 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import { NavLink } from "react-router-dom"
 import { HomeIcon } from "@radix-ui/react-icons"
 import { BookOpenIcon, CogIcon } from "@heroicons/react/outline"
+import { GrGraphQl } from "react-icons/gr"
 
 import { PRIMARY_LIGHT } from "/@/constants/colors"
 import { classNames } from "/@/utils/tailwind"
+import { APPSYNC_PATH, DOCS_PATH, ROOT_PATH, SYSTEM_PATH } from "/@/constants/routes"
 
 type NavigationMenuItemProps = {
   to: string
@@ -34,22 +36,44 @@ function NavigationMenuItem({ to, icon, tooltip }: NavigationMenuItemProps) {
   )
 }
 
+const navigation = [
+  {
+    tooltip: "Dashboard",
+    to: ROOT_PATH,
+    icon: <HomeIcon color={PRIMARY_LIGHT} />,
+  },
+  {
+    tooltip: "AppSync",
+    to: APPSYNC_PATH,
+    icon: <GrGraphQl color={PRIMARY_LIGHT} />,
+  },
+  {
+    tooltip: "Docs",
+    to: DOCS_PATH,
+    icon: <BookOpenIcon color={PRIMARY_LIGHT} />,
+  },
+  {
+    tooltip: "System",
+    to: SYSTEM_PATH,
+    icon: <CogIcon color={PRIMARY_LIGHT} />,
+  },
+]
+
 function Navigation(): JSX.Element {
   return (
     <TooltipPrimitive.Provider>
       <NavigationMenu.Root orientation="vertical" className="flex-col">
         <NavigationMenu.List className="flex-col space-y-4">
-          <NavigationMenuItem tooltip="Home" to="/" icon={<HomeIcon color={PRIMARY_LIGHT} />} />
-          <NavigationMenuItem
-            tooltip="Docs"
-            to="/docs"
-            icon={<BookOpenIcon color={PRIMARY_LIGHT} />}
-          />
-          <NavigationMenuItem
-            tooltip="System"
-            to="/system"
-            icon={<CogIcon color={PRIMARY_LIGHT} />}
-          />
+          {navigation.map(item => {
+            return (
+              <NavigationMenuItem
+                key={item.tooltip}
+                tooltip={item.tooltip}
+                to={item.to}
+                icon={item.icon}
+              />
+            )
+          })}
         </NavigationMenu.List>
       </NavigationMenu.Root>
     </TooltipPrimitive.Provider>

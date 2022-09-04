@@ -1,0 +1,5 @@
+export const ROOT_PATH = "/"
+export const DOCS_PATH = "/docs"
+export const SYSTEM_PATH = "/system"
+export const APIGATEWAY_PATH = "/apigateway"
+export const APPSYNC_PATH = "/appsync"

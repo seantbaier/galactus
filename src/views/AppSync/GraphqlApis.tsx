@@ -11,7 +11,7 @@ type TableWidgetProps = {
   className?: string
 }
 
-function AppSyncTableWidget({ className = "" }: TableWidgetProps): JSX.Element {
+function GraphqlApis({ className = "" }: TableWidgetProps): JSX.Element {
   const rerender = useReducer(() => ({}), {})[1]
 
   const { data } = useListGraphqlApis()
@@ -79,7 +79,7 @@ function AppSyncTableWidget({ className = "" }: TableWidgetProps): JSX.Element {
   return (
     <div className={classNames("my-6", className)}>
       <div className="flex items-center mb-2">
-        <h2 className="text-lg mr-4">AppSync Graphql API</h2>
+        <h2 className="text-lg mr-4">Graphql APIs</h2>
 
         <button onClick={() => rerender()} className="text-primary-light" type="button">
           <UpdateIcon />
@@ -102,4 +102,4 @@ function AppSyncTableWidget({ className = "" }: TableWidgetProps): JSX.Element {
   )
 }
 
-export default AppSyncTableWidget
+export default GraphqlApis

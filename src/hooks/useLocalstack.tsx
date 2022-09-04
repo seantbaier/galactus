@@ -9,9 +9,7 @@ import {
 import { dataProvider } from "/@/providers"
 import { LOCALSTACK_INSTALLED_COMMAND, LOCALSTACK_SUCCESS_RESPONSE } from "/@/constants/system"
 import { LocalStackStatusResponse } from "/@/providers/localstackProvider"
-
-const LOCALSTACK_QUERY_KEY = "__localstack__"
-const LOCALSTACK_STATUS_KEY = "status"
+import { LOCALSTACK_QUERY_KEY, LOCALSTACK_STATUS_KEY } from "/@/hooks/constants"
 
 export interface UseLocalstackInterface {
   isRunning: boolean | undefined
