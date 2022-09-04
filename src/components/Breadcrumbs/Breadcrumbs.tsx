@@ -31,7 +31,11 @@ function Breadcrumb({ text, href, first = false }: BreadcrumbProps) {
   )
 }
 
-function Breadcrumbs() {
+type BreadcrumbsProps = {
+  className?: string
+}
+
+function Breadcrumbs({ className = "" }: BreadcrumbsProps) {
   const { pathname } = useLocation()
   const pathItems = pathname.split("/")
 
@@ -45,7 +49,7 @@ function Breadcrumbs() {
   }, [])
 
   return (
-    <nav className="hidden sm:flex" aria-label="Breadcrumb">
+    <nav className={classNames("hidden sm:flex pl-2", className)} aria-label="Breadcrumb">
       <ol className="flex items-center space-x-4">
         {crumbs.map((item, index) => {
           return index === 0 ? (

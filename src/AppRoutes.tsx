@@ -5,7 +5,7 @@ import { Home } from "/@/views/Home"
 import { System } from "/@/views/System"
 import { NotFoundError } from "/@/components/NotFoundError"
 import { Docs } from "/@/views/Docs"
-import { AppSync } from "/@/views/AppSync"
+import { AppSync, GraphqlApi, GraphqlApis } from "/@/views/AppSync"
 
 import {
   APIGATEWAY_PATH,
@@ -24,7 +24,8 @@ function AppRoutes(): JSX.Element {
       <Route path={SYSTEM_PATH} element={<System />} />
       <Route path={APIGATEWAY_PATH} element={<ApiGateway />} />
       <Route path={APPSYNC_PATH} element={<AppSync />}>
-        <Route path={`${APPSYNC_PATH}/:apiId`} element={<AppSync />} />
+        <Route path={`${APPSYNC_PATH}/:apiId`} element={<GraphqlApi />} />
+        <Route index element={<GraphqlApis />} />
       </Route>
 
       <Route path="*" element={<NotFoundError />} />

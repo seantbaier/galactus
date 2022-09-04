@@ -40,7 +40,7 @@ module.exports = {
         gray: colors.gray,
         slate: colors.slate,
         black: { dark: "#070708", main: "#151618", light: "#070708" },
-        white: { main: "#ecedee", light: "rgba(99, 100, 101, 0.5)" },
+        white: { main: "#ecedee", light: "#313538" },
         maximize: { main: "#00ff00" },
         minimize: { main: "#ffcc00" },
         close: { main: "#ff0000" },

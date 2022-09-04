@@ -1,30 +1,31 @@
 import GraphiQL from "graphiql"
 import "graphiql/graphiql.min.css"
 
-const APPSYNC_API_URL =
-  "https://2vvqhuhbijdzhokrxc3dklnt3y.appsync-api.us-east-1.amazonaws.com/graphql"
+import { APPSYNC_API_KEY, APPSYNC_API_ENDPOINT } from "/@/constants/config"
 
 const credentialsAppSync = {
-  "x-api-key": "da2-jobgkhrkjfd6ngqfevofmzf3s4",
+  "x-api-key": APPSYNC_API_KEY,
 }
 
 function AppSync() {
   return (
-    <GraphiQL
-      fetcher={async graphQLParams => {
-        const data = await fetch(APPSYNC_API_URL, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            ...credentialsAppSync,
-          },
-          body: JSON.stringify(graphQLParams),
-          credentials: "omit",
-        })
-        return data.json().catch(() => data.text())
-      }}
-    />
+    <div className="h-full">
+      <GraphiQL
+        fetcher={async graphQLParams => {
+          const data = await fetch(APPSYNC_API_ENDPOINT, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              ...credentialsAppSync,
+            },
+            body: JSON.stringify(graphQLParams),
+            credentials: "omit",
+          })
+          return data.json().catch(() => data.text())
+        }}
+      />
+    </div>
   )
 }
 

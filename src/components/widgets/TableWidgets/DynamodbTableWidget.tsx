@@ -9,7 +9,7 @@ import {
   useDeleteDynamodbTable,
   useListDynamodbTables,
 } from "/@/hooks/useDynamodb"
-import { Table, DeleteButton } from "/@/components/Tables"
+import { DeleteButton } from "/@/components/Tables"
 
 type DynamodbTableWidgetProps = {
   className?: string
@@ -85,7 +85,6 @@ function DynamodbTableWidget({ className = "" }: DynamodbTableWidgetProps): JSX.
         </button>
       </div>
 
-      <Table data={dynamodbTableNames} columns={dynamodbTableColumns} />
       <div className="flex justify-between items-center">
         <button
           onClick={onCreate}

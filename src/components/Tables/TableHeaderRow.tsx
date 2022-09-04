@@ -1,7 +1,7 @@
-import { flexRender, Table as ReactTable } from "@tanstack/react-table"
+import { flexRender } from "@tanstack/react-table"
 
 import { classNames } from "/@/utils/tailwind"
-import { CELL_PADDING } from "./constants"
+import { HEADER_CELL_PADDING } from "./constants"
 
 type TableHeaderCellProps = {
   children: React.ReactNode
@@ -12,8 +12,9 @@ export function TableHeaderCell({ children, className = "" }: TableHeaderCellPro
   return (
     <td
       className={classNames(
+        "first-of-type:rounded-tl-lg first-of-type:pl-4 last-of-type:rounded-tr-lg",
         "font-normal text-white-main text-xs text-left",
-        CELL_PADDING,
+        HEADER_CELL_PADDING,
         className,
       )}
     >
@@ -24,11 +25,12 @@ export function TableHeaderCell({ children, className = "" }: TableHeaderCellPro
 
 type TableHeaderRowProps = {
   headerGroup: any
+  className?: string
 }
 
-function TableHeaderRow({ headerGroup }: TableHeaderRowProps): JSX.Element {
+function TableHeaderRow({ headerGroup, className = "" }: TableHeaderRowProps): JSX.Element {
   return (
-    <tr key={headerGroup.id} className="border-b border-white-light">
+    <tr key={headerGroup.id} className={classNames("border-b border-white-light", className)}>
       {headerGroup.headers.map((header: any) => (
         <TableHeaderCell key={header.id}>
           {header.isPlaceholder
@@ -40,18 +42,4 @@ function TableHeaderRow({ headerGroup }: TableHeaderRowProps): JSX.Element {
   )
 }
 
-type TableHeaderProps<TData> = {
-  table: ReactTable<TData>
-}
-
-function TableHeader<TData>({ table }: TableHeaderProps<TData>): JSX.Element {
-  return (
-    <thead>
-      {table.getHeaderGroups().map(headerGroup => (
-        <TableHeaderRow key={headerGroup.id} headerGroup={headerGroup} />
-      ))}
-    </thead>
-  )
-}
-
-export default TableHeader
+export default TableHeaderRow

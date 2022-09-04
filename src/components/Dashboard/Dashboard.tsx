@@ -1,5 +1,7 @@
 import { Sidebar } from "/@/components/Sidebar"
 import { Breadcrumbs } from "/@/components/Breadcrumbs"
+import { classNames } from "/@/utils/tailwind"
+import { DASHBOARD_WIDTH } from "/@/constants/layout"
 
 interface DashboardProps {
   children: React.ReactNode
@@ -7,14 +9,14 @@ interface DashboardProps {
 
 function Dashboard({ children }: DashboardProps): JSX.Element {
   return (
-    <div id="dashboard" className="flex w-full">
+    <div id="dashboard" className="flex w-full bg-black-dark">
       <Sidebar />
-      <div className="pl-5 pt-2 mt-[30px] bg-black-dark w-full">
-        <div className="mb-4">
-          <Breadcrumbs />
+      <main className={classNames("flex-col h-full pt-[30px]", DASHBOARD_WIDTH)}>
+        <div className="h-full p-[5px]">
+          <Breadcrumbs className="mb-4" />
+          <div className="flex w-full px-5">{children}</div>
         </div>
-        <div className="flex w-full">{children}</div>
-      </div>
+      </main>
     </div>
   )
 }

@@ -1,11 +1,11 @@
-import GraphqlApis from "./GraphqlApis"
+import { Outlet } from "react-router-dom"
 
 function AppSync() {
   return (
-    <div>
-      <div className="mb-4">
+    <div className="w-full">
+      <div className="mb-4 w-full">
         <h1 className="text-xl mb-4">AppSync</h1>
-        <GraphqlApis />
+        <Outlet />
       </div>
     </div>
   )
