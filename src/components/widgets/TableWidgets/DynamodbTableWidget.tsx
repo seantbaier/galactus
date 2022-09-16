@@ -1,54 +1,28 @@
-import { useReducer } from "react"
+import { useReducer, useState } from "react"
 import { createColumnHelper } from "@tanstack/react-table"
 import { UpdateIcon } from "@radix-ui/react-icons"
-import { CreateTableCommandInput } from "@aws-sdk/client-dynamodb"
 
 import { classNames } from "/@/utils/tailwind"
-import {
-  useCreateDynamodbTable,
-  useDeleteDynamodbTable,
-  useListDynamodbTables,
-} from "/@/hooks/useDynamodb"
+import { useDeleteDynamodbTable, useListDynamodbTables } from "/@/hooks/useDynamodb"
 import { DeleteButton } from "/@/components/Tables"
+import DynamodbTableForm from "/@/components/Forms/DynamodbForms/DynamodbTableForm"
 
 type DynamodbTableWidgetProps = {
   className?: string
 }
 
 function DynamodbTableWidget({ className = "" }: DynamodbTableWidgetProps): JSX.Element {
+  const [showForm, setShowForm] = useState<boolean>(false)
+
   const rerender = useReducer(() => ({}), {})[1]
   const { data } = useListDynamodbTables()
   const { TableNames: dynamodbTableNames = [] } = data || {}
+  console.log("dynamodbTableNames", dynamodbTableNames)
 
-  const createTableMutation = useCreateDynamodbTable()
   const deleteTableMutation = useDeleteDynamodbTable()
 
   const onCreate = () => {
-    const tableName = "expenses"
-    const project = "buckets"
-    const stage = "local"
-
-    const commandInput: CreateTableCommandInput = {
-      AttributeDefinitions: [
-        { AttributeName: "PK", AttributeType: "S" },
-        { AttributeName: "SK", AttributeType: "S" },
-      ],
-      TableName: `${project}-${tableName}-${stage}`,
-      KeySchema: [
-        { AttributeName: "PK", KeyType: "HASH" },
-        { AttributeName: "SK", KeyType: "RANGE" },
-      ],
-      BillingMode: "PAY_PER_REQUEST",
-      //   LocalSecondaryIndexes: input.LocalSecondaryIndexes, ?
-      //   GlobalSecondaryIndexes: input.GlobalSecondaryIndexes,
-      //   ProvisionedThroughput: input.ProvisionedThroughput,
-      //   StreamSpecification: input.StreamSpecification,
-      //   SSESpecification: input.SSESpecification,
-      //   Tags: input.Tags,
-      //   TableClass: input.TableClass,
-    }
-
-    createTableMutation.mutate(commandInput)
+    setShowForm(true)
   }
 
   const onDelete = (info: any) => {
@@ -77,6 +51,7 @@ function DynamodbTableWidget({ className = "" }: DynamodbTableWidgetProps): JSX.
 
   return (
     <div className={classNames("my-6", className)}>
+      {showForm ? <DynamodbTableForm open={showForm} setOpen={setShowForm} /> : null}
       <div className="flex items-center mb-2">
         <h2 className="text-lg mr-4">Dynamodb</h2>
 
