@@ -1,6 +1,6 @@
-import { ChevronRightIcon } from "@heroicons/react/solid"
 import { useLocation, Link } from "react-router-dom"
 
+import { ChevronRightIcon } from "/@/components/Icons"
 import { ROOT_PATH } from "/@/constants/routes"
 import { classNames } from "/@/utils/tailwind"
 
@@ -49,7 +49,7 @@ function Breadcrumbs({ className = "" }: BreadcrumbsProps) {
   }, [])
 
   return (
-    <nav className={classNames("hidden sm:flex pl-2", className)} aria-label="Breadcrumb">
+    <nav className={classNames("hidden sm:flex p-2 pl-3 mb-2", className)} aria-label="Breadcrumb">
       <ol className="flex items-center space-x-4">
         {crumbs.map((item, index) => {
           return index === 0 ? (

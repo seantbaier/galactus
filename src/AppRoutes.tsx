@@ -6,6 +6,7 @@ import { System } from "/@/views/System"
 import { NotFoundError } from "/@/components/NotFoundError"
 import { Docs } from "/@/views/Docs"
 import { AppSync, GraphqlApi, GraphqlApis } from "/@/views/AppSync"
+import { Dynamodb, DynamodbTable, DynamodbOperationBuidler } from "/@/views/Dynamodb"
 
 import {
   APIGATEWAY_PATH,
@@ -13,6 +14,7 @@ import {
   DOCS_PATH,
   ROOT_PATH,
   SYSTEM_PATH,
+  DYNAMODB_PATH,
 } from "/@/constants/routes"
 
 function AppRoutes(): JSX.Element {
@@ -26,6 +28,10 @@ function AppRoutes(): JSX.Element {
       <Route path={APPSYNC_PATH} element={<AppSync />}>
         <Route path={`${APPSYNC_PATH}/:apiId`} element={<GraphqlApi />} />
         <Route index element={<GraphqlApis />} />
+      </Route>
+      <Route path={DYNAMODB_PATH} element={<Dynamodb />}>
+        <Route path={`${DYNAMODB_PATH}/:tableName`} element={<DynamodbTable />} />
+        <Route index element={<DynamodbOperationBuidler />} />
       </Route>
 
       <Route path="*" element={<NotFoundError />} />

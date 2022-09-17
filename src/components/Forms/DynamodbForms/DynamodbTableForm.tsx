@@ -3,7 +3,6 @@ import { CreateTableCommandInput, GlobalSecondaryIndex } from "@aws-sdk/client-d
 
 import DynamodbFormModal from "./DynamodbFormModal"
 import { Button } from "/@/components/Buttons/Button"
-import Combobox from "/@/components/Forms/Comboboxes/Combobox"
 
 import { useCreateDynamodbTable } from "/@/hooks/useDynamodb"
 import { classNames } from "/@/utils/tailwind"

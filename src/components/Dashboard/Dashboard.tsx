@@ -9,12 +9,12 @@ interface DashboardProps {
 
 function Dashboard({ children }: DashboardProps): JSX.Element {
   return (
-    <div id="dashboard" className="flex w-full bg-black-dark">
+    <div id="dashboard" className="flex w-full bg-black-dark ">
       <Sidebar />
-      <main className={classNames("flex-col h-full pt-[30px]", DASHBOARD_WIDTH)}>
-        <div className="h-full p-[5px]">
-          <Breadcrumbs className="mb-4" />
-          <div className="flex w-full px-5">{children}</div>
+      <main className={classNames("flex justify-items-stretch flex-col", DASHBOARD_WIDTH)}>
+        <Breadcrumbs />
+        <div className="p-[5px]">
+          <div className="flex flex-1 w-full px-5">{children}</div>
         </div>
       </main>
     </div>

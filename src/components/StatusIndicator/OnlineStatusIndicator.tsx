@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { StatusOfflineIcon, StatusOnlineIcon } from "@heroicons/react/outline"
+import { SignalSlashIcon, SignalIcon } from "/@/components/Icons"
 
 // Constants
 import { TITLEBAR_HEIGHT, TITLEBAR_CONTAINER_LENGTH } from "/@/constants/layout"
@@ -25,9 +25,9 @@ function OnlineStatusIndicator() {
         title="Online status"
       >
         {online ? (
-          <StatusOnlineIcon className="h-[15px] w-[15px] text-green-600" />
+          <SignalIcon className="h-[15px] w-[15px] text-green-600" />
         ) : (
-          <StatusOfflineIcon className="h-[15px] w-[15px] text-red-900" />
+          <SignalSlashIcon className="h-[15px] w-[15px] text-red-900" />
         )}
       </button>
     </div>

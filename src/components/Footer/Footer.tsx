@@ -10,7 +10,7 @@ function Footer({ className = "" }: FooterProps): JSX.Element {
     <div
       id="footer"
       className={classNames(
-        "fixed bottom-0 left-0 flex justify-end items-center w-full h-[30px] bg-black-main border-t border-black-dark px-[10px]",
+        "flex justify-end items-center w-full h-[30px] bg-black-main border-t border-black-dark px-[10px]",
         className,
       )}
     >

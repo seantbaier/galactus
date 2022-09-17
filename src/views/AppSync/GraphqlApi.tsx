@@ -7,7 +7,7 @@ const credentialsAppSync = {
   "x-api-key": APPSYNC_API_KEY,
 }
 
-function AppSync() {
+function GraphqlApi() {
   return (
     <div className="h-full">
       <GraphiQL
@@ -29,4 +29,4 @@ function AppSync() {
   )
 }
 
-export default AppSync
+export default GraphqlApi

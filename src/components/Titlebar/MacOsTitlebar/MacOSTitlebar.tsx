@@ -29,7 +29,7 @@ function MacOSTitlebar({ className = "" }: MacOSTitlebarProps): JSX.Element {
     <div
       data-tauri-drag-region
       className={classNames(
-        "flex justify-between w-full pl-[10px] top-0 left-0 fixed bg-black-main border-b border-black-dark",
+        "flex justify-between w-full pl-[10px] bg-black-main border-b border-black-dark",
         TITLEBAR_HEIGHT,
         className,
       )}

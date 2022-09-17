@@ -9,6 +9,9 @@ import {
   DeleteTableCommandInput,
   DeleteTableCommandOutput,
   DeleteTableCommand,
+  DescribeTableCommandInput,
+  DescribeTableCommandOutput,
+  DescribeTableCommand,
 } from "@aws-sdk/client-dynamodb"
 
 import { awsConfig } from "/@/providers"
@@ -17,11 +20,41 @@ export const appSyncCommands = {
   listGraphqlApis: "listGraphqlApis",
 }
 
-class AppSyncProvider {
+class DynamodbProvider {
   public client
 
   constructor() {
     this.client = new DynamoDBClient(awsConfig)
+  }
+
+  public describeTable = async (
+    TableName: DescribeTableCommandInput,
+  ): Promise<DescribeTableCommandOutput> => {
+    const command = new DescribeTableCommand(TableName)
+    return this.client
+      .send(command)
+      .then((data: ListTablesCommandOutput) => {
+        const { TableNames, LastEvaluatedTableName, $metadata } = data || {}
+
+        if (!TableNames || !Array.isArray(TableNames)) {
+          Promise.reject()
+        }
+
+        return Promise.resolve({
+          TableNames,
+          LastEvaluatedTableName,
+          $metadata,
+        })
+      })
+      .catch(err => {
+        const { $response } = err || {}
+        let error = err
+        if ($response) {
+          error = $response
+        }
+
+        return Promise.reject(error)
+      })
   }
 
   public listTables = async (input?: ListTablesCommandInput): Promise<ListTablesCommandOutput> => {
@@ -35,7 +68,6 @@ class AppSyncProvider {
       .send(command)
       .then((data: ListTablesCommandOutput) => {
         const { TableNames, LastEvaluatedTableName, $metadata } = data || {}
-        console.log("data", data)
 
         if (!TableNames || !Array.isArray(TableNames)) {
           Promise.reject()
@@ -101,12 +133,10 @@ class AppSyncProvider {
   public deleteDynamodbTable = async (
     input: DeleteTableCommandInput,
   ): Promise<DeleteTableCommandOutput> => {
-    console.log("input", input)
     const command = new DeleteTableCommand(input)
     return this.client
       .send(command)
       .then((data: DeleteTableCommandOutput) => {
-        console.log("data", data)
         const { $metadata } = data || {}
 
         return Promise.resolve({
@@ -114,7 +144,6 @@ class AppSyncProvider {
         })
       })
       .catch(err => {
-        console.log("err", err)
         const { $response } = err || {}
         let error = err
         if ($response) {
@@ -126,4 +155,4 @@ class AppSyncProvider {
   }
 }
 
-export default AppSyncProvider
+export default DynamodbProvider

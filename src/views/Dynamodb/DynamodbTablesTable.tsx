@@ -1,22 +1,21 @@
 import { createColumnHelper, useReactTable, getCoreRowModel } from "@tanstack/react-table"
 import { Link } from "react-router-dom"
 import { TrashIcon } from "@radix-ui/react-icons"
-import { GraphqlApi } from "@aws-sdk/client-appsync"
+import { TableDescription } from "@aws-sdk/client-dynamodb"
 
 import { TableRow, TableHeaderRow, TableFooterRow } from "/@/components/Tables"
-import { useListGraphqlApis, useDeleteGraphqlApi } from "/@/hooks/useAppSync"
-import { APPSYNC_PATH } from "/@/constants/routes"
+import { useListDynamodbTables, useDeleteDynamodbTable } from "/@/hooks/useDynamodb"
+import { DYNAMODB_PATH } from "/@/constants/routes"
 import { getOriginal } from "/@/utils/reactTable"
 
-function GraphqlApisTable(): JSX.Element {
-  const { data } = useListGraphqlApis()
-  const { graphqlApis = [] } = data || {}
+function DynamodbTablesTable(): JSX.Element {
+  const { data } = useListDynamodbTables()
+  const { TableNames: tableNames = [] } = data || {}
+  console.log("tableNames", tableNames)
 
-  const deleteGraphqlApi = useDeleteGraphqlApi()
+  const deleteDynamodbTable = useDeleteDynamodbTable()
 
-  const onDelete = (apiId: any) => deleteGraphqlApi.mutate({ apiId })
-
-  const renderAuthType = () => <span>Auth Type</span>
+  const onDelete = (tableName: any) => deleteDynamodbTable.mutate(tableName)
 
   const renderDeleteIcon = (info: any) => (
     <button
@@ -28,36 +27,20 @@ function GraphqlApisTable(): JSX.Element {
     </button>
   )
 
-  const renderNameCell = (info: any) => (
-    <Link to={`${APPSYNC_PATH}/${getOriginal(info).apiId}`} className="text-primary-light">
-      {info.renderValue()}
-    </Link>
-  )
+  const renderNameCell = (info: any) => {
+    const tableName = getOriginal(info)
+    return (
+      <Link to={`${DYNAMODB_PATH}/${tableName}`} className="text-primary-light">
+        {tableName}
+      </Link>
+    )
+  }
 
-  const columnHelper = createColumnHelper<GraphqlApi>()
-  const appSyncColumns = [
+  const columnHelper = createColumnHelper<any>()
+  const columns = [
     columnHelper.accessor("name", {
-      header: () => "Name",
+      header: () => "Table Name",
       cell: info => renderNameCell(info),
-      footer: info => info.column.id,
-    }),
-    columnHelper.accessor("apiId", {
-      header: () => "API ID",
-      cell: info => info.getValue(),
-      footer: info => info.column.id,
-    }),
-    columnHelper.accessor("authenticationType", {
-      header: renderAuthType,
-      footer: info => info.column.id,
-    }),
-    columnHelper.accessor(row => row?.uris?.GRAPHQL, {
-      id: "Graphql Url",
-      header: "Graphql Url",
-      footer: info => info.column.id,
-    }),
-    columnHelper.accessor(row => row?.uris?.REALTIME, {
-      id: "WS Url",
-      header: "WS Url",
       footer: info => info.column.id,
     }),
     columnHelper.accessor("delete", {
@@ -67,9 +50,12 @@ function GraphqlApisTable(): JSX.Element {
     }),
   ]
 
+  //   const tableDescriptions: TableDescription[] = tableNames.map(name => {
+  //     return { TableName: name }
+  //   })
   const table = useReactTable({
-    data: graphqlApis,
-    columns: appSyncColumns,
+    data: tableNames,
+    columns,
     getCoreRowModel: getCoreRowModel(),
   })
 
@@ -94,4 +80,4 @@ function GraphqlApisTable(): JSX.Element {
   )
 }
 
-export default GraphqlApisTable
+export default DynamodbTablesTable

@@ -1,13 +1,18 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import { NavLink } from "react-router-dom"
-import { HomeIcon } from "@radix-ui/react-icons"
-import { BookOpenIcon, CogIcon } from "@heroicons/react/outline"
 import { GrGraphQl } from "react-icons/gr"
 
 import { PRIMARY_LIGHT } from "/@/constants/colors"
 import { classNames } from "/@/utils/tailwind"
-import { APPSYNC_PATH, DOCS_PATH, ROOT_PATH, SYSTEM_PATH } from "/@/constants/routes"
+import { BookOpenIcon, CogIcon, CircleStackIcon, HomeIcon } from "/@/components/Icons"
+import {
+  APPSYNC_PATH,
+  DOCS_PATH,
+  DYNAMODB_PATH,
+  ROOT_PATH,
+  SYSTEM_PATH,
+} from "/@/constants/routes"
 
 type NavigationMenuItemProps = {
   to: string
@@ -48,6 +53,14 @@ const navigation = [
     icon: <GrGraphQl color={PRIMARY_LIGHT} />,
   },
   {
+    tooltip: "Dynamodb",
+    to: DYNAMODB_PATH,
+    icon: <CircleStackIcon color={PRIMARY_LIGHT} />,
+  },
+]
+
+const secondaryNav = [
+  {
     tooltip: "Docs",
     to: DOCS_PATH,
     icon: <BookOpenIcon color={PRIMARY_LIGHT} />,
@@ -61,22 +74,44 @@ const navigation = [
 
 function Navigation(): JSX.Element {
   return (
-    <TooltipPrimitive.Provider>
-      <NavigationMenu.Root orientation="vertical" className="flex-col">
-        <NavigationMenu.List className="flex-col space-y-4">
-          {navigation.map(item => {
-            return (
-              <NavigationMenuItem
-                key={item.tooltip}
-                tooltip={item.tooltip}
-                to={item.to}
-                icon={item.icon}
-              />
-            )
-          })}
-        </NavigationMenu.List>
-      </NavigationMenu.Root>
-    </TooltipPrimitive.Provider>
+    <div className="flex flex-col justify-between">
+      <div>
+        <TooltipPrimitive.Provider>
+          <NavigationMenu.Root orientation="vertical" className="flex-col">
+            <NavigationMenu.List className="h-full flex-col space-y-4">
+              {navigation.map(item => {
+                return (
+                  <NavigationMenuItem
+                    key={item.tooltip}
+                    tooltip={item.tooltip}
+                    to={item.to}
+                    icon={item.icon}
+                  />
+                )
+              })}
+            </NavigationMenu.List>
+          </NavigationMenu.Root>
+        </TooltipPrimitive.Provider>
+      </div>
+      <div className="mb-[75px]">
+        <TooltipPrimitive.Provider>
+          <NavigationMenu.Root orientation="vertical" className="flex-col">
+            <NavigationMenu.List className="h-full flex-col space-y-4">
+              {secondaryNav.map(item => {
+                return (
+                  <NavigationMenuItem
+                    key={item.tooltip}
+                    tooltip={item.tooltip}
+                    to={item.to}
+                    icon={item.icon}
+                  />
+                )
+              })}
+            </NavigationMenu.List>
+          </NavigationMenu.Root>
+        </TooltipPrimitive.Provider>
+      </div>
+    </div>
   )
 }
 

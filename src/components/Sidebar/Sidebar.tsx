@@ -8,7 +8,7 @@ function Sidebar(): JSX.Element {
   return (
     <div
       className={classNames(
-        "flex justify-center pt-[15px] bg-black-dark mt-[30px] border-r border-white-light",
+        "flex justify-center pt-[15px] bg-black-dark border-r border-white-light",
         SIDEBAR_WIDTH,
       )}
     >

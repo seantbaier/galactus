@@ -1,4 +1,5 @@
 import { Steps, Step } from "/@/components/Steps"
+import { Dashboard } from "/@/components/Dashboard"
 
 import { useLocalstackInstalledQuery } from "/@/hooks/useLocalstack"
 import {
@@ -57,31 +58,33 @@ function System(): JSX.Element {
   const { data: localstackIsInstalled } = useLocalstackInstalledQuery()
 
   return (
-    <div className="flex justify-center mt-[10%] w-full">
-      <div className="flex-col justify-center">
-        <h1 className="text-white-main mb-[15px] text-center text-xl font-sans">
-          {localstackIsInstalled ? "System Requirements Met!" : "Checking for Dependencies"}
-        </h1>
+    <Dashboard>
+      <div className="flex justify-center mt-[10%] w-full">
+        <div className="flex-col justify-center">
+          <h1 className="text-white-main mb-[15px] text-center text-xl font-sans">
+            {localstackIsInstalled ? "System Requirements Met!" : "Checking for Dependencies"}
+          </h1>
 
-        <div className="flex justify-center p-[50px]">
-          <Steps>
-            {steps.map((step: SystemConfigItem, index: number) => {
-              const { title, description, status } = step
-              const last = index + 1 === steps.length
-              return (
-                <Step
-                  key={title}
-                  title={title}
-                  description={description}
-                  last={last}
-                  status={status}
-                />
-              )
-            })}
-          </Steps>
+          <div className="flex justify-center p-[50px]">
+            <Steps>
+              {steps.map((step: SystemConfigItem, index: number) => {
+                const { title, description, status } = step
+                const last = index + 1 === steps.length
+                return (
+                  <Step
+                    key={title}
+                    title={title}
+                    description={description}
+                    last={last}
+                    status={status}
+                  />
+                )
+              })}
+            </Steps>
+          </div>
         </div>
       </div>
-    </div>
+    </Dashboard>
   )
 }
 

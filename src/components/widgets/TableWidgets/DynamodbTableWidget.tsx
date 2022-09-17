@@ -1,7 +1,7 @@
 import { useReducer, useState } from "react"
 import { createColumnHelper } from "@tanstack/react-table"
-import { UpdateIcon } from "@radix-ui/react-icons"
 
+import { UpdateIcon } from "/@/components/Icons"
 import { classNames } from "/@/utils/tailwind"
 import { useDeleteDynamodbTable, useListDynamodbTables } from "/@/hooks/useDynamodb"
 import { DeleteButton } from "/@/components/Tables"
