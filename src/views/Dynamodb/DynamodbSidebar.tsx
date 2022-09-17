@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 
 import { useListDynamodbTables } from "/@/hooks/useDynamodb"
-import Combobox from "/@/components/Forms/Comboboxes/Combobox"
 import { classNames } from "/@/utils/tailwind"
+import { TableCellsIcon } from "/@/components/Icons"
 
 type TableName = {
   id: number
@@ -21,12 +21,20 @@ function DynamodbTable({ table, selected, setSelectedTable }: DynamodbTableProps
     <button
       type="button"
       className={classNames(
-        "text-left py-2 border-b border-white-light",
-        selected ? "bg-primary-dark text-primary-light" : "",
+        "text-xs text-left pl-3 py-3",
+        selected ? "bg-primary-dark text-primary-light" : "text-white-main",
       )}
       onClick={() => setSelectedTable(table)}
     >
-      {name}
+      <span className="flex">
+        <TableCellsIcon
+          className={classNames(
+            "h-[15px] w-[15px] mr-2",
+            selected ? "text-primary-light" : "text-white-main",
+          )}
+        />
+        {name}
+      </span>
     </button>
   )
 }
@@ -50,8 +58,7 @@ function DynamodbSidebar(): JSX.Element {
 
   return (
     <div className="flex flex-col h-full min-w-[200px] pr-[15px]">
-      <h1 className="text-xl mb-4">Dynamodb</h1>
-      {/* <Combobox items={items} /> */}
+      <h1 className="text-xl mb-4 pl-3">Dynamodb</h1>
       {filteredTables.map((table: TableName) => {
         return (
           <DynamodbTable

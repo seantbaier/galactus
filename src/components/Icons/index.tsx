@@ -7,6 +7,7 @@ import {
   CheckIcon,
   ChevronDownIcon,
   ChevronRightIcon,
+  TableCellsIcon,
 } from "@heroicons/react/24/outline"
 import { HomeIcon, UpdateIcon } from "@radix-ui/react-icons"
 
@@ -20,5 +21,6 @@ export {
   HomeIcon,
   SignalIcon,
   SignalSlashIcon,
+  TableCellsIcon,
   UpdateIcon,
 }
