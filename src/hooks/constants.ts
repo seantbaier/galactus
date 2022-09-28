@@ -12,3 +12,6 @@ export const KAFKA_CLUSTERS_KEY = "clusters"
 
 export const LOCALSTACK_QUERY_KEY = "__LOCALSTACK__"
 export const LOCALSTACK_STATUS_KEY = "status"
+
+export const RDS_QUERY_KEY = "__RDS__"
+export const RDS_INSTANCES_KEY = "instances"

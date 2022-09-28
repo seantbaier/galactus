@@ -2,6 +2,7 @@ import {
   AppSyncTableWidget,
   DynamodbTableWidget,
   KafkaWidget,
+  RDSDBInstanceWidget,
 } from "/@/components/widgets/TableWidgets"
 import { Dashboard } from "/@/components/Dashboard"
 
@@ -14,6 +15,7 @@ function Home(): JSX.Element {
           <AppSyncTableWidget />
           <DynamodbTableWidget />
           <KafkaWidget />
+          <RDSDBInstanceWidget />
         </div>
       </div>
     </Dashboard>

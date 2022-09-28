@@ -7,6 +7,7 @@ import IamProvider from "./aws/iamProvider"
 import LocalstackProvider from "./localstackProvider"
 import DockerProvider from "./dockerProvider"
 import OSSystemProvider from "./osSystemProvider"
+import RDSProvider from "./aws/rdsProvider"
 import { LOCALSTACK_ENDPOINT, AWS_REGION, APP_URL } from "/@/constants/config"
 import KafkaProvider from "./aws/kafkaProvider"
 
@@ -45,11 +46,12 @@ function addAuthenticationMiddleware() {
 const dataProvider = {
   appsync: new AppSyncProvider(),
   docker: new DockerProvider(),
+  dynamodb: new DynamodbProvider(),
   iam: new IamProvider(),
   kafka: new KafkaProvider(),
   localstack: new LocalstackProvider(),
   os: new OSSystemProvider(),
-  dynamodb: new DynamodbProvider(),
+  rds: new RDSProvider(),
 }
 
 addAuthenticationMiddleware()
