@@ -1,5 +1,6 @@
 import { useReducer } from "react"
-import { UpdateIcon } from "@radix-ui/react-icons"
+import { useParams } from "react-router-dom"
+import { UpdateIcon } from "/@/components/Icons"
 import { CreateGraphqlApiCommandInput } from "@aws-sdk/client-appsync"
 
 import { classNames } from "/@/utils/tailwind"
@@ -12,6 +13,8 @@ type TableWidgetProps = {
 
 function DynamodbOperationBuilder({ className = "" }: TableWidgetProps): JSX.Element {
   const rerender = useReducer(() => ({}), {})[1]
+  const params = useParams()
+  console.log("params", params)
 
   const createGraphqlApi = useCreateGraphqlApi()
 

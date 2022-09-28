@@ -1,4 +1,8 @@
-import { AppSyncTableWidget, DynamodbTableWidget } from "/@/components/widgets/TableWidgets"
+import {
+  AppSyncTableWidget,
+  DynamodbTableWidget,
+  KafkaWidget,
+} from "/@/components/widgets/TableWidgets"
 import { Dashboard } from "/@/components/Dashboard"
 
 function Home(): JSX.Element {
@@ -9,6 +13,7 @@ function Home(): JSX.Element {
           <h1 className="text-xl mb-4">Dashboard</h1>
           <AppSyncTableWidget />
           <DynamodbTableWidget />
+          <KafkaWidget />
         </div>
       </div>
     </Dashboard>

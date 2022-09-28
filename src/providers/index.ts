@@ -3,10 +3,12 @@ import { Credentials } from "@aws-sdk/types"
 
 import AppSyncProvider from "./aws/appSyncProvider"
 import DynamodbProvider from "./aws/dynamodbProvider"
+import IamProvider from "./aws/iamProvider"
 import LocalstackProvider from "./localstackProvider"
 import DockerProvider from "./dockerProvider"
 import OSSystemProvider from "./osSystemProvider"
 import { LOCALSTACK_ENDPOINT, AWS_REGION, APP_URL } from "/@/constants/config"
+import KafkaProvider from "./aws/kafkaProvider"
 
 const credentials: Credentials = {
   accessKeyId: "test",
@@ -41,10 +43,12 @@ function addAuthenticationMiddleware() {
 }
 
 const dataProvider = {
-  localstack: new LocalstackProvider(),
-  docker: new DockerProvider(),
-  os: new OSSystemProvider(),
   appsync: new AppSyncProvider(),
+  docker: new DockerProvider(),
+  iam: new IamProvider(),
+  kafka: new KafkaProvider(),
+  localstack: new LocalstackProvider(),
+  os: new OSSystemProvider(),
   dynamodb: new DynamodbProvider(),
 }
 

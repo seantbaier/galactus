@@ -17,7 +17,6 @@ function DynamodbTableWidget({ className = "" }: DynamodbTableWidgetProps): JSX.
   const rerender = useReducer(() => ({}), {})[1]
   const { data } = useListDynamodbTables()
   const { TableNames: dynamodbTableNames = [] } = data || {}
-  console.log("dynamodbTableNames", dynamodbTableNames)
 
   const deleteTableMutation = useDeleteDynamodbTable()
 
