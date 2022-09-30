@@ -3,15 +3,15 @@ import { Link } from "react-router-dom"
 import { TrashIcon } from "@radix-ui/react-icons"
 
 import { TableRow, TableHeaderRow, TableFooterRow } from "/@/components/Tables"
-import { useDescribeDBInstances, useDeleteDBInstance } from "/@/hooks/useRDS"
+import { useDeleteDBInstance } from "/@/hooks/useRDS"
 import { getOriginal } from "/@/utils/reactTable"
-import { DeleteDBInstanceCommandInput } from "@aws-sdk/client-rds"
+import { DBInstance } from "@aws-sdk/client-rds"
 
-function RDSDBInstanceTable(): JSX.Element {
-  const { data } = useDescribeDBInstances({})
-  const { DBInstances: dbInstances = [] } = data || {}
-  console.log("instances", dbInstances)
+type RDSDBInstanceTableProps = {
+  items: DBInstance[]
+}
 
+export function RDSDBInstanceTable({ items = [] }: RDSDBInstanceTableProps): JSX.Element {
   const deleteDBInstanceMutation = useDeleteDBInstance()
 
   const onDelete = (DBInstanceIdentifier: string) =>
@@ -63,7 +63,7 @@ function RDSDBInstanceTable(): JSX.Element {
   ]
 
   const table = useReactTable({
-    data: dbInstances,
+    data: items,
     columns: clusterColumns,
     getCoreRowModel: getCoreRowModel(),
   })
@@ -88,5 +88,3 @@ function RDSDBInstanceTable(): JSX.Element {
     </table>
   )
 }
-
-export default RDSDBInstanceTable

@@ -1,3 +1,4 @@
+import { HomeIcon, UpdateIcon } from "@radix-ui/react-icons"
 import {
   SignalSlashIcon,
   SignalIcon,
@@ -8,10 +9,15 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   TableCellsIcon,
-} from "@heroicons/react/24/outline"
-import { HomeIcon, UpdateIcon } from "@radix-ui/react-icons"
+  BoltIcon,
+  Squares2X2Icon,
+  RectangleServerStackIcon,
+  ServerStackIcon,
+  QueueListIcon,
+} from "./HeroIcons"
 
 export {
+  BoltIcon,
   BookOpenIcon,
   CogIcon,
   CircleStackIcon,
@@ -21,6 +27,10 @@ export {
   HomeIcon,
   SignalIcon,
   SignalSlashIcon,
+  Squares2X2Icon,
   TableCellsIcon,
   UpdateIcon,
+  RectangleServerStackIcon,
+  ServerStackIcon,
+  QueueListIcon,
 }

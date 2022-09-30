@@ -5,13 +5,22 @@ import { GrGraphQl } from "react-icons/gr"
 
 import { PRIMARY_LIGHT } from "/@/constants/colors"
 import { classNames } from "/@/utils/tailwind"
-import { BookOpenIcon, CogIcon, CircleStackIcon, HomeIcon } from "/@/components/Icons"
+import {
+  BookOpenIcon,
+  CogIcon,
+  CircleStackIcon,
+  HomeIcon,
+  RectangleServerStackIcon,
+  QueueListIcon,
+} from "/@/components/Icons"
 import {
   APPSYNC_PATH,
   DOCS_PATH,
   DYNAMODB_PATH,
   ROOT_PATH,
   SYSTEM_PATH,
+  RDS_PATH,
+  MSK_PATH,
 } from "/@/constants/routes"
 
 type NavigationMenuItemProps = {
@@ -55,7 +64,17 @@ const navigation = [
   {
     tooltip: "Dynamodb",
     to: DYNAMODB_PATH,
+    icon: <RectangleServerStackIcon color={PRIMARY_LIGHT} />,
+  },
+  {
+    tooltip: "RDS",
+    to: RDS_PATH,
     icon: <CircleStackIcon color={PRIMARY_LIGHT} />,
+  },
+  {
+    tooltip: "MSK",
+    to: MSK_PATH,
+    icon: <QueueListIcon color={PRIMARY_LIGHT} />,
   },
 ]
 
