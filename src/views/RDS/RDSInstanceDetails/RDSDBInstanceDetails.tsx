@@ -4,7 +4,7 @@ import { UpdateIcon } from "/@/components/Icons"
 
 import { classNames } from "/@/utils/tailwind"
 import { useDescribeDBInstances } from "/@/hooks/useRDS"
-import { RDSDBInstanceTable } from "./RDSDBInstanceTable"
+import { RDSDBInstancesTable } from "../RDSInstancesTable/RDSDBInstancesTable"
 
 type TableWidgetProps = {
   className?: string
@@ -26,7 +26,7 @@ function RDSDBInstanceDetails({ className = "" }: TableWidgetProps): JSX.Element
         </button>
       </div>
 
-      <RDSDBInstanceTable items={items} />
+      <RDSDBInstancesTable items={items} />
     </div>
   )
 }

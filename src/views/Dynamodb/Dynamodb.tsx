@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 
 import DynamodbSidebar from "./DynamodbSidebar"
-import { Sidebar } from "/@/components/Sidebar"
+import { Sidebar } from "/@/components/Layout/Sidebar"
 
 import { Breadcrumbs } from "/@/components/Breadcrumbs"
 import { classNames } from "/@/utils/tailwind"

@@ -1,7 +1,7 @@
-import { Sidebar } from "/@/components/Sidebar"
 import { Breadcrumbs } from "/@/components/Breadcrumbs"
 import { classNames } from "/@/utils/tailwind"
 import { DASHBOARD_WIDTH } from "/@/constants/layout"
+import { Sidebar } from "/@/components/Layout/Sidebar"
 
 interface DashboardProps {
   children: React.ReactNode

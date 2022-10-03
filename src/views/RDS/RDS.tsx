@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 
-import RDSSidebar from "./RDSSidebar"
-import { Sidebar } from "/@/components/Sidebar"
+import RDSSidebar from "./RDSSidebar/RDSSidebar"
+import { Sidebar } from "/@/components/Layout/Sidebar"
 
 import { Breadcrumbs } from "/@/components/Breadcrumbs"
 import { classNames } from "/@/utils/tailwind"

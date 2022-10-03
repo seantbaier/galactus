@@ -64,7 +64,7 @@ const navigation = [
   {
     tooltip: "Dynamodb",
     to: DYNAMODB_PATH,
-    icon: <RectangleServerStackIcon color={PRIMARY_LIGHT} />,
+    icon: <RectangleServerStackIcon color="text-primary-light" />,
   },
   {
     tooltip: "RDS",

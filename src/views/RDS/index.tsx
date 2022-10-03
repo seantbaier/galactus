@@ -1,6 +1,6 @@
 import RDS from "./RDS"
-import RDSSidebar from "./RDSSidebar"
-import { RDSDBInstanceTable } from "./RDSDBInstanceTable"
-import RDSDBInstanceDetails from "./RDSDBInstanceDetails"
+import RDSSidebar from "./RDSSidebar/RDSSidebar"
+import { RDSDBInstancesTable } from "./RDSInstancesTable/RDSDBInstancesTable"
+import RDSDBInstanceDetails from "./RDSInstanceDetails/RDSDBInstanceDetails"
 
-export { RDS, RDSSidebar, RDSDBInstanceTable, RDSDBInstanceDetails }
+export { RDS, RDSSidebar, RDSDBInstancesTable, RDSDBInstanceDetails }

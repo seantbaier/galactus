@@ -7,7 +7,7 @@ import { NotFoundError } from "/@/components/NotFoundError"
 import { Docs } from "/@/views/Docs"
 import { AppSync, GraphqlApi, GraphqlApis } from "/@/views/AppSync"
 import { Dynamodb, DynamodbTable, DynamodbOperationBuidler } from "/@/views/Dynamodb"
-import { RDS, RDSDBInstanceDetails } from "/@/views/RDS"
+import { RDS, RDSDBInstanceDetails, RDSDBInstancesTable } from "/@/views/RDS"
 
 import {
   APIGATEWAY_PATH,
@@ -46,7 +46,7 @@ function AppRoutes(): JSX.Element {
       {/* RDS */}
       <Route path={RDS_PATH} element={<RDS />}>
         <Route path={`${RDS_PATH}/:dbInstanceName`} element={<RDSDBInstanceDetails />} />
-        <Route index element={<RDSDBInstanceDetails />} />
+        <Route index element={<RDSDBInstancesTable />} />
       </Route>
 
       {/* MSK */}

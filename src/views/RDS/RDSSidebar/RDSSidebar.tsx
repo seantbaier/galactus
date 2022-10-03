@@ -6,6 +6,7 @@ import { classNames } from "/@/utils/tailwind"
 import { TableCellsIcon } from "/@/components/Icons"
 import { RDS_PATH } from "/@/constants/routes"
 import { useDescribeDBInstances } from "/@/hooks/useRDS"
+import RDSDBInstanceEmptySidebar from "./RDSDBInstanceEmptySidebar"
 
 type RDSInstanceNameProps = {
   instance: any
@@ -85,17 +86,24 @@ function RDSSidebar(): JSX.Element {
   return (
     <div className="flex flex-col h-full min-w-[200px]">
       <h1 className="text-xl mb-4 pl-3">RDS</h1>
-      {filteredItems.map((instance: DBInstance) => {
-        const { DBName = "" } = instance
-        return (
-          <RDSInstanceName
-            key={DBName}
-            instance={instance}
-            selected={isSelected(DBName)}
-            setSelectedItem={setSelectedItem}
-          />
-        )
-      })}
+      <h2 className="pl-3">Database Instances</h2>
+      {filteredItems.length > 0 ? (
+        filteredItems.map((instance: DBInstance) => {
+          const { DBName = "" } = instance
+          return (
+            <RDSInstanceName
+              key={DBName}
+              instance={instance}
+              selected={isSelected(DBName)}
+              setSelectedItem={setSelectedItem}
+            />
+          )
+        })
+      ) : (
+        <div className="pl-3 pt-4">
+          <RDSDBInstanceEmptySidebar />
+        </div>
+      )}
     </div>
   )
 }

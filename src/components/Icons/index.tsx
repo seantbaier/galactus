@@ -14,6 +14,8 @@ import {
   RectangleServerStackIcon,
   ServerStackIcon,
   QueueListIcon,
+  DBPlusIcon,
+  FolderPlusIcon,
 } from "./HeroIcons"
 
 export {
@@ -24,6 +26,8 @@ export {
   CheckIcon,
   ChevronDownIcon,
   ChevronRightIcon,
+  DBPlusIcon,
+  FolderPlusIcon,
   HomeIcon,
   SignalIcon,
   SignalSlashIcon,

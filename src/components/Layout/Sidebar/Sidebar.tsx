@@ -1,4 +1,3 @@
-// Componentes
 import { Navigation } from "./Navbar"
 
 import { classNames } from "/@/utils/tailwind"

@@ -1,7 +1,6 @@
 import { createColumnHelper, useReactTable, getCoreRowModel } from "@tanstack/react-table"
 import { Link } from "react-router-dom"
 import { TrashIcon } from "@radix-ui/react-icons"
-import { TableDescription } from "@aws-sdk/client-dynamodb"
 
 import { TableRow, TableHeaderRow, TableFooterRow } from "/@/components/Tables"
 import { useListDynamodbTables, useDeleteDynamodbTable } from "/@/hooks/useDynamodb"
@@ -11,7 +10,6 @@ import { getOriginal } from "/@/utils/reactTable"
 function DynamodbTablesTable(): JSX.Element {
   const { data } = useListDynamodbTables()
   const { TableNames: tableNames = [] } = data || {}
-  console.log("tableNames", tableNames)
 
   const deleteDynamodbTable = useDeleteDynamodbTable()
 
@@ -50,9 +48,6 @@ function DynamodbTablesTable(): JSX.Element {
     }),
   ]
 
-  //   const tableDescriptions: TableDescription[] = tableNames.map(name => {
-  //     return { TableName: name }
-  //   })
   const table = useReactTable({
     data: tableNames,
     columns,

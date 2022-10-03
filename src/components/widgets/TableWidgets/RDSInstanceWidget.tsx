@@ -3,7 +3,7 @@ import { useReducer } from "react"
 import { UpdateIcon } from "/@/components/Icons"
 import { classNames } from "/@/utils/tailwind"
 
-import { RDSDBInstanceTable } from "/@/views/RDS/RDSDBInstanceTable"
+import { RDSDBInstancesTable } from "/@/views/RDS/RDSInstancesTable/RDSDBInstancesTable"
 import { useCreateDBInstance, useDescribeDBInstances } from "/@/hooks/useRDS"
 import { createDBInstanceCommandInput } from "/@/views/RDS/rdsCommands"
 
@@ -32,7 +32,7 @@ function RDSInstanceWidget({ className = "" }: RDSInstanceWidgetProps): JSX.Elem
         </button>
       </div>
 
-      <RDSDBInstanceTable items={items} />
+      <RDSDBInstancesTable items={items} />
       <div className="flex justify-between items-center">
         <button
           onClick={onCreate}
