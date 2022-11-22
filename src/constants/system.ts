@@ -5,6 +5,8 @@ export const SYSTEM_CHECK_INTERVAL = 5000
 export const DOCKER_VERSION = "Docker v20.10.14" // TODO make this dynamic
 export const DOCKER_SUCCESS_RESPONSE = "Docker version 20.10.14, build a224086\n" // TODO make this dynamic
 export const DOCKER_INSTALLED_COMMAND = "docker_is_installed"
+export const DOCKER_SOCKET_PATH = "/var/run/docker.sock"
+export const DOCKER_API_ENDPOINT = "http://localhost/v1.41"
 
 // OS
 export const OS_SUCCESS_RESPONSE = "Looks good!\n"

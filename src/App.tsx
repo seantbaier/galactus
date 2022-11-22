@@ -8,6 +8,8 @@ import { classNames } from "/@/utils/tailwind"
 // import { useLocalstackInstalledQuery } from "/@/hooks/useLocalstack"
 
 function Main(): JSX.Element {
+  //   const { localstackIsInstalled } = useLocalstackInstalledQuery()
+  //   console.log("localstackIsInstalled", localstackIsInstalled)
   return (
     <div className={classNames("flex h-full")}>
       {/* <Dashboard>{localstackIsInstalled ? <AppRoutes /> : <System />}</Dashboard> */}

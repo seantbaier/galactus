@@ -5,6 +5,7 @@ import { DOCKER_VERSION } from "/@/constants/system"
 
 function DockerStatusIndicator(): JSX.Element {
   const { data: localstackStatus } = useLocalstackStatusQuery()
+
   const indicatorStatus = localstackStatus
     ? SystemConfigItemStatus.running
     : SystemConfigItemStatus.failed

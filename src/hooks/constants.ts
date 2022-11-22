@@ -15,3 +15,6 @@ export const LOCALSTACK_STATUS_KEY = "status"
 
 export const RDS_QUERY_KEY = "__RDS__"
 export const RDS_INSTANCES_KEY = "instances"
+
+export const DOCKER_QUERY_KEY = "__DOCKER__"
+export const DOCKER_INFO_KEY = "info"
