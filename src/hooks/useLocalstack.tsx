@@ -39,7 +39,7 @@ export const useLocalstackStatusQuery = (): UseQueryResult<LocalStackStatusRespo
     dataProvider.localstack.localstackStatus(),
   )
 
-export const useLocalstackInstalledQuery = (): UseQueryResult<boolean | unknown> => {
+export const useLocalstackInstalledQuery = () => {
   return useQuery([LOCALSTACK_QUERY_KEY, LOCALSTACK_INSTALLED_COMMAND], async () => {
     const response = await dataProvider.localstack.installationCheck()
     return response === LOCALSTACK_SUCCESS_RESPONSE

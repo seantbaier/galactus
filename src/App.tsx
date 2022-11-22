@@ -5,11 +5,11 @@ import { Titlebar } from "./components/Titlebar"
 import { ToastViewPort } from "/@/components/Toast"
 
 import { classNames } from "/@/utils/tailwind"
-// import { useLocalstackInstalledQuery } from "/@/hooks/useLocalstack"
+import { useLocalstackInstalledQuery } from "/@/hooks/useLocalstack"
 
 function Main(): JSX.Element {
-  //   const { localstackIsInstalled } = useLocalstackInstalledQuery()
-  //   console.log("localstackIsInstalled", localstackIsInstalled)
+  const { data } = useLocalstackInstalledQuery()
+  console.log("localstackIsInstalled", data)
   return (
     <div className={classNames("flex h-full")}>
       {/* <Dashboard>{localstackIsInstalled ? <AppRoutes /> : <System />}</Dashboard> */}

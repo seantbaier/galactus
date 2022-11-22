@@ -75,8 +75,6 @@ function Combobox({ items = [], displayValue }: ComboboxProps) {
   const [query, setQuery] = useState("")
   const [selectedItem, setSelectedItem] = useState()
 
-  console.log("items", items)
-
   const defaultDisplayValue = (item: ComboboxItem) => item?.name
 
   const filteredItems =
