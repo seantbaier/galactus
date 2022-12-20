@@ -1,10 +1,8 @@
 import { useReducer, useState } from "react"
-import { createColumnHelper } from "@tanstack/react-table"
 
 import { UpdateIcon } from "/@/components/Icons"
 import { classNames } from "/@/utils/tailwind"
-import { useDeleteDynamodbTable, useListDynamodbTables } from "/@/hooks/useDynamodb"
-import { DeleteButton } from "/@/components/Tables"
+
 import DynamodbTableForm from "/@/components/Forms/DynamodbForms/DynamodbTableForm"
 
 type DynamodbTableWidgetProps = {
@@ -15,38 +13,10 @@ function DynamodbTableWidget({ className = "" }: DynamodbTableWidgetProps): JSX.
   const [showForm, setShowForm] = useState<boolean>(false)
 
   const rerender = useReducer(() => ({}), {})[1]
-  const { data } = useListDynamodbTables()
-  const { TableNames: dynamodbTableNames = [] } = data || {}
-
-  const deleteTableMutation = useDeleteDynamodbTable()
 
   const onCreate = () => {
     setShowForm(true)
   }
-
-  const onDelete = (info: any) => {
-    const {
-      row: { original },
-    } = info
-
-    deleteTableMutation.mutate({ TableName: original })
-  }
-
-  const renderDeleteButton = (info: any) => <DeleteButton info={info} onDelete={onDelete} />
-
-  const columnHelper = createColumnHelper<any>()
-
-  const dynamodbTableColumns = [
-    columnHelper.accessor("TableName", {
-      header: "Table Name",
-      cell: info => info.row.original,
-    }),
-    columnHelper.accessor("delete", {
-      id: "delete-button",
-      header: "",
-      cell: (info: any) => renderDeleteButton(info),
-    }),
-  ]
 
   return (
     <div className={classNames("my-6", className)}>

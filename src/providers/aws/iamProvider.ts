@@ -27,12 +27,10 @@ class IamProvider {
     MaxItems,
   }: ListRolesCommandInput): Promise<ListRolesCommandOutput> => {
     const command = new ListRolesCommand({ PathPrefix, Marker, MaxItems })
-    console.log("command", Marker)
     return this.client
       .send(command)
       .then((data: ListRolesCommandOutput) => {
         const { Roles, $metadata } = data || {}
-        console.log("roles", Roles)
 
         if (!Roles || !Array.isArray(Roles)) {
           Promise.reject()

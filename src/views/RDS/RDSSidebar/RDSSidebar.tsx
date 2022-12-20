@@ -42,7 +42,7 @@ function RDSInstanceName({ instance, selected, setSelectedItem }: RDSInstanceNam
 
 function RDSSidebar(): JSX.Element {
   const [selectedItem, setSelectedItem] = useState<DBInstance>()
-  const [query, setQuery] = useState<string>("")
+  //   const [query, setQuery] = useState<string>("")
 
   const { dbInstanceName = "" } = useParams()
 
@@ -69,13 +69,14 @@ function RDSSidebar(): JSX.Element {
     [dbInstances],
   )
 
-  const filteredItems =
-    query === ""
-      ? dbInstances
-      : dbInstances.filter((item: DBInstance) => {
-          const { DBName = "" } = item || {}
-          return DBName.toLowerCase().includes(query.toLowerCase())
-        })
+  //   const filteredItems =
+  //     query === ""
+  //       ? dbInstances
+  //       : dbInstances.filter((item: DBInstance) => {
+  //           const { DBName = "" } = item || {}
+  //           return DBName.toLowerCase().includes(query.toLowerCase())
+  //         })
+  const filteredItems: any[] = []
 
   useEffect(() => {
     if (dbInstanceName) {

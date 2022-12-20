@@ -15,7 +15,7 @@ function AppSyncTableWidget({ className = "" }: TableWidgetProps): JSX.Element {
 
   const createGraphqlApi = useCreateGraphqlApi()
 
-  const handleOnClick = (input: any) => {
+  const handleOnClick = () => {
     const commandInput: CreateGraphqlApiCommandInput = {
       name: "local-appsync-api",
       authenticationType: "API_KEY",

@@ -1,9 +1,8 @@
 import { useReducer } from "react"
-import { createColumnHelper } from "@tanstack/react-table"
 
 import { UpdateIcon } from "/@/components/Icons"
 import { classNames } from "/@/utils/tailwind"
-import { useListClusters, useCreateCluster } from "/@/hooks/useKafka"
+import { useCreateCluster } from "/@/hooks/useKafka"
 
 import KafkaClustersTable from "/@/views/Kafka/KafkaClustersTable"
 
@@ -13,8 +12,6 @@ type KafkaWidgetProps = {
 
 function KafkaWidget({ className = "" }: KafkaWidgetProps): JSX.Element {
   const rerender = useReducer(() => ({}), {})[1]
-  const { data } = useListClusters({})
-  const { ClusterInfoList: clusters } = data || {}
 
   const createClusterMutation = useCreateCluster()
 
