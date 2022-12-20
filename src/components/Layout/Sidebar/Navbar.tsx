@@ -1,27 +1,11 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import { NavLink } from "react-router-dom"
-import { GrGraphQl } from "react-icons/gr"
 
 import { PRIMARY_LIGHT } from "/@/constants/colors"
 import { classNames } from "/@/utils/tailwind"
-import {
-  BookOpenIcon,
-  CogIcon,
-  CircleStackIcon,
-  HomeIcon,
-  RectangleServerStackIcon,
-  QueueListIcon,
-} from "/@/components/Icons"
-import {
-  APPSYNC_PATH,
-  DOCS_PATH,
-  DYNAMODB_PATH,
-  ROOT_PATH,
-  SYSTEM_PATH,
-  RDS_PATH,
-  MSK_PATH,
-} from "/@/constants/routes"
+import { BookOpenIcon, CogIcon, HomeIcon, RectangleServerStackIcon } from "/@/components/Icons"
+import { DOCS_PATH, DYNAMODB_PATH, ROOT_PATH, SYSTEM_PATH } from "/@/constants/routes"
 
 type NavigationMenuItemProps = {
   to: string
@@ -57,24 +41,9 @@ const navigation = [
     icon: <HomeIcon color={PRIMARY_LIGHT} />,
   },
   {
-    tooltip: "AppSync",
-    to: APPSYNC_PATH,
-    icon: <GrGraphQl color={PRIMARY_LIGHT} />,
-  },
-  {
     tooltip: "Dynamodb",
     to: DYNAMODB_PATH,
     icon: <RectangleServerStackIcon color="text-primary-light" />,
-  },
-  {
-    tooltip: "RDS",
-    to: RDS_PATH,
-    icon: <CircleStackIcon color={PRIMARY_LIGHT} />,
-  },
-  {
-    tooltip: "MSK",
-    to: MSK_PATH,
-    icon: <QueueListIcon color={PRIMARY_LIGHT} />,
   },
 ]
 

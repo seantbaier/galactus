@@ -1,18 +1,13 @@
-// import { System } from "./views/System"
 import AppRoutes from "/@/AppRoutes"
 import { Footer } from "./components/Footer"
 import { Titlebar } from "./components/Titlebar"
 import { ToastViewPort } from "/@/components/Toast"
 
 import { classNames } from "/@/utils/tailwind"
-import { useLocalstackInstalledQuery } from "/@/hooks/useLocalstack"
 
 function Main(): JSX.Element {
-  const { data } = useLocalstackInstalledQuery()
-  console.log("localstackIsInstalled", data)
   return (
     <div className={classNames("flex h-full")}>
-      {/* <Dashboard>{localstackIsInstalled ? <AppRoutes /> : <System />}</Dashboard> */}
       <AppRoutes />
     </div>
   )
