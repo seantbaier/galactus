@@ -12,6 +12,7 @@ import {
   Squares2X2Icon,
   ServerStackIcon,
   QueueListIcon,
+  ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline"
 import { classNames } from "/@/utils/tailwind"
 import { SVGIconProps } from "./types"
@@ -110,4 +111,5 @@ export {
   TableCellsIcon,
   ServerStackIcon,
   QueueListIcon,
+  ExclamationTriangleIcon,
 }

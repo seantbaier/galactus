@@ -1,25 +1,27 @@
 import axios, { AxiosRequestConfig } from "axios"
-import { Credentials } from "@aws-sdk/types"
 
 import AppSyncProvider from "./aws/appSyncProvider"
+import CloudwatchProvider from "./aws/cloudwatchProvider"
 import DynamodbProvider from "./aws/dynamodbProvider"
 import IamProvider from "./aws/iamProvider"
 import LocalstackProvider from "./localstackProvider"
 import DockerProvider from "./dockerProvider"
 import OSSystemProvider from "./osSystemProvider"
 import RDSProvider from "./aws/rdsProvider"
-import { LOCALSTACK_ENDPOINT, AWS_REGION, APP_URL } from "/@/constants/config"
+import { AWS_REGION, APP_URL, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from "/@/constants/config"
 import KafkaProvider from "./aws/kafkaProvider"
 
-const credentials: Credentials = {
+const credentials = {
   accessKeyId: "test",
   secretAccessKey: "test",
 }
 
 const awsConfig = {
   region: AWS_REGION,
-  endpoint: LOCALSTACK_ENDPOINT,
-  credentials,
+  credentials: {
+    accessKeyId: AWS_ACCESS_KEY_ID,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY,
+  },
 }
 
 function addAuthenticationMiddleware() {
@@ -52,6 +54,7 @@ const dataProvider = {
   localstack: new LocalstackProvider(),
   os: new OSSystemProvider(),
   rds: new RDSProvider(),
+  cloudwatch: new CloudwatchProvider(),
 }
 
 addAuthenticationMiddleware()

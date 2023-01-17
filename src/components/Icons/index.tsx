@@ -16,6 +16,7 @@ import {
   QueueListIcon,
   DBPlusIcon,
   FolderPlusIcon,
+  ExclamationTriangleIcon,
 } from "./HeroIcons"
 
 export {
@@ -37,4 +38,5 @@ export {
   RectangleServerStackIcon,
   ServerStackIcon,
   QueueListIcon,
+  ExclamationTriangleIcon,
 }

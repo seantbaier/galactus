@@ -1,11 +1,12 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import { NavLink } from "react-router-dom"
+import { FunnelIcon } from "@heroicons/react/24/outline"
 
 import { PRIMARY_LIGHT } from "/@/constants/colors"
 import { classNames } from "/@/utils/tailwind"
-import { BookOpenIcon, CogIcon, HomeIcon, RectangleServerStackIcon } from "/@/components/Icons"
-import { DOCS_PATH, DYNAMODB_PATH, ROOT_PATH, SYSTEM_PATH } from "/@/constants/routes"
+import { BookOpenIcon, CogIcon, HomeIcon } from "/@/components/Icons"
+import { CLOUDWATCH_PATH, DOCS_PATH, ROOT_PATH, SYSTEM_PATH } from "/@/constants/routes"
 
 type NavigationMenuItemProps = {
   to: string
@@ -41,9 +42,9 @@ const navigation = [
     icon: <HomeIcon color={PRIMARY_LIGHT} />,
   },
   {
-    tooltip: "Dynamodb",
-    to: DYNAMODB_PATH,
-    icon: <RectangleServerStackIcon color="text-primary-light" />,
+    tooltip: "Cloudwatch",
+    to: CLOUDWATCH_PATH,
+    icon: <FunnelIcon className="text-primary-light" />,
   },
 ]
 

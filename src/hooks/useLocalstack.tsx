@@ -35,9 +35,11 @@ export const useStopLocalStackServicesMutation = () => {
 }
 
 export const useLocalstackStatusQuery = (): UseQueryResult<LocalStackStatusResponse> =>
-  useQuery([LOCALSTACK_QUERY_KEY, LOCALSTACK_STATUS_KEY], async () =>
-    dataProvider.localstack.localstackStatus(),
-  )
+  useQuery([LOCALSTACK_QUERY_KEY, LOCALSTACK_STATUS_KEY], async () => {
+    const result = await dataProvider.localstack.localstackStatus()
+    console.log("result", result)
+    return result
+  })
 
 export const useLocalstackInstalledQuery = () => {
   return useQuery([LOCALSTACK_QUERY_KEY, LOCALSTACK_INSTALLED_COMMAND], async () => {

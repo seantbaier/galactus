@@ -37,7 +37,7 @@ function DynamodbOperationBuilder({ className = "" }: TableWidgetProps): JSX.Ele
   return (
     <div className={classNames("my-6 w-[100%]", className)}>
       <div className="flex items-center mb-2">
-        <h2 className="text-lg mr-4">Graphql APIs</h2>
+        <h2 className="text-lg mr-4">Tables</h2>
 
         <button onClick={() => rerender()} className="text-primary-light" type="button">
           <UpdateIcon />

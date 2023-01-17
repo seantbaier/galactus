@@ -17,8 +17,15 @@ export interface InvokeCommandResponse {
   error?: string
 }
 
+export interface LocalStackStatusServices {
+  features: any
+  services: any
+  version: string
+}
+
 export interface LocalStackStatusResponse extends InvokeCommandResponse {
   code: string
+  data: any
 }
 
 class LocalstackProvider {
@@ -54,8 +61,11 @@ class LocalstackProvider {
 
   public localstackStatus = async (): Promise<LocalStackStatusResponse> => {
     return axios
-      .get(this.baseUrl)
-      .then(({ status }) => {
+      .get(`${this.baseUrl}/_localstack/health`)
+      .then((res: any) => {
+        console.log("res", res.data.services)
+
+        const { data, status } = res
         if (!status) {
           return Promise.reject()
         }
@@ -64,12 +74,13 @@ class LocalstackProvider {
         if (status === 200) {
           code = LOCALSTACK_RUNNING_CODE
         }
-        return Promise.resolve({ code })
+        console.log("provider data", data)
+        return Promise.resolve({ data, code })
       })
       .catch(err => {
         const { code } = err || {}
         // Resolving the error in order to display in the component
-        return Promise.resolve({ code })
+        return Promise.resolve({ code, data: {} })
       })
   }
 
